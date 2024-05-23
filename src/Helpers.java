@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 import static java.lang.System.out;
 /*
@@ -41,5 +42,16 @@ public class Helpers
         temp.setPrice(scanner.nextDouble());
 
         return temp;
+    }
+
+    static public void printArrayList(List<Book> books)
+    {
+        if(books.isEmpty())
+            System.out.println("No books found.");
+        for(Book book : books)
+        {
+            book.display();
+            out.println();
+        }
     }
 }

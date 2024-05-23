@@ -1,32 +1,53 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import static java.lang.System.out;
+import org.sqlite.*;
 
 public class Driver
 {
     private static final Scanner scanner = new Scanner(System.in);
     private static Library masterLibrary = new Library();
+    private final static String DB_URL = "jdbc:sqlite:src/Library.db";
     Driver()
     { }
 
-    public static void start()
+    public static void start() throws SQLException
     {
+        checkDB();
         controller();
+    }
+
+    private static void checkDB() throws SQLException
+    {
+        try(Connection con = DriverManager.getConnection(DB_URL))
+        {
+            if(con != null)
+                out.println("Connected to the database successfully.");
+            else
+                out.println("Created the database successfully.");
+        }
+        catch(SQLException e)
+        {
+            out.println(e.getErrorCode());
+        }
     }
 
 
     private static void controller()
     {
+        out.println();
         boolean valid = false;
-//        int numBooks = (masterLibrary.hasBooks() ? masterLibrary.getTotalBooks() : 0);
         Book newBook = null;
-        displayMenu();
+        int choice = menu();
+        int totalBooks;
+        String isA;
+        String areA;
 
-        out.print("Please enter your choice: ");
-        int choice = scanner.nextInt();
-        valid = validateChoice(choice);
 
-        choice = valid ? choice : 16; // if the choice isn't valid return 16 to show switch error else choice
+        choice = validateChoice(choice) ? choice : 16; // if the choice isn't valid return 16 to show switch error else choice or don't because an invalid choice invokes default
 
         switch (choice)
         {
@@ -34,19 +55,24 @@ public class Driver
                 out.println("Goodbye!");
                 break;
             case 1:
-//                out.println("The total number of books is: " + numBooks);
+                totalBooks = LibraryDB.getNumBooks();
+                isA = " is " + totalBooks + " in the library";
+                areA = " are a total of " + totalBooks + " books";
+                out.println("There" + (totalBooks > 1 ? areA : isA));
                 controller();
                 break;
             case 2:
                newBook = Helpers.collectNewBookData();
-               out.println("Added: ");
-               newBook.display();
+               LibraryDB.addBookToLibrary(newBook);
                out.println();
                controller();
                 break;
             case 3:
-                out.println("LOL");
+                Helpers.printArrayList(LibraryDB.getAllBooks());
                 controller();
+                break;
+            case 4:
+//                controller();
                 break;
             case 16:
                 out.println("Not a valid choice, try again");
@@ -61,16 +87,22 @@ public class Driver
 
     private static boolean validateChoice(int choice)
     {
-        return choice >= 0 && choice <= 3 || choice == 16;
+        return choice >= 0 && choice <= 10 || choice == 16;
     }
 
 
-    private static void displayMenu()
+    private static int menu()
     {
-        out.println("1. Display total number of books");
-        out.println("2. Add a book to the library");
-        out.println("3. Print shelf map");
+        out.println("1. Display Book Count");
+        out.println("2. Add New Book To Library");
+        out.println("3. Display All Books");
+        out.println("4. Display Shelf Count");
+        out.println("5. Add Shelf To Library");
+        out.println(("6. Display All Shelves"));
         out.println("0. Exit");
+
+        out.print("Please enter your choice: ");
+        return scanner.nextInt();
     }
 
 }

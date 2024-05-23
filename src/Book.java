@@ -22,12 +22,13 @@ public class Book
      * @param bGenre the Books Genre
      * @param inSeries is the book a Series? T/F
      */
-    public Book(String bTitle, String bAuthor, String bGenre, boolean inSeries)
+    public Book(String bTitle, String bAuthor, String bGenre, boolean inSeries, double bPrice)
     {
         title = bTitle;
         author = bAuthor;
         genre = bGenre;
         isSeries = inSeries;
+        price = bPrice;
 
         if(isSeries) booksInSeries = new ArrayList<>();
     }
@@ -154,5 +155,6 @@ public class Book
     {
         price = newPrice;
     }
+    public Double getPrice() { return price; }
 
 }

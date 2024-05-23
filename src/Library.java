@@ -7,7 +7,7 @@ public class Library
 
     private HashMap<Integer, BookShelf> shelfMap = null;
     private boolean hasBooks = false;
-
+    private static LibraryDB db;
     public Library() { /* default constructor */ }
 
     public boolean hasBooks()
@@ -40,12 +40,18 @@ public class Library
         BookShelf shelf = getOpenShelf();
 
         if(shelf != null)
+        {
+            LibraryDB.addBookToLibrary(temp);
             return shelf.addBook(temp);
+
+        }
 
 
 
         return false; // if we make it here we didn't add the book
     }
+
+
     public boolean addBookInitialized(Book newBook)
     {
         newBook = Helpers.collectNewBookData();
@@ -58,7 +64,8 @@ public class Library
 
         if(shelf != null)
         {
-            return shelf.addBook(newBook);
+            shelf.addBook(newBook);
+            return LibraryDB.addBookToLibrary(newBook);
         }
 
         return false;

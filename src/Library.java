@@ -8,6 +8,7 @@ public class Library
     private HashMap<Integer, BookShelf> shelfMap = null;
     private boolean hasBooks = false;
     private static LibraryDB db;
+    private int totalBooks = 0;
     public Library() { /* default constructor */ }
 
     public boolean hasBooks()
@@ -29,47 +30,16 @@ public class Library
         shelfMap.put(bookShelf.getID(), bookShelf);
     }
 
-    public boolean addBook()
+    public void addBook()
     {
-        // if our shelfMap is empty initialize it
-        if(shelfMap.isEmpty())
-            shelfMap = new HashMap<>();
-
-        Book temp = Helpers.collectNewBookData();
-        out.println(temp.getTitle() + " has been added to the library");
-        BookShelf shelf = getOpenShelf();
-
-        if(shelf != null)
-        {
-            LibraryDB.addBookToLibrary(temp);
-            return shelf.addBook(temp);
-
-        }
+        Book newBook = Helpers.collectNewBookData();
+        // now do something to the shelf. This feels relational.... EG Shelf > Book || Book > Shelf
+        LibraryDB.addBookToLibrary(Helpers.collectNewBookData());
 
 
-
-        return false; // if we make it here we didn't add the book
     }
 
 
-    public boolean addBookInitialized(Book newBook)
-    {
-        newBook = Helpers.collectNewBookData();
-
-        BookShelf shelf = null;
-        if(shelfMap == null || shelfMap.isEmpty())
-            return false;
-
-        shelf = getOpenShelf();
-
-        if(shelf != null)
-        {
-            shelf.addBook(newBook);
-            return LibraryDB.addBookToLibrary(newBook);
-        }
-
-        return false;
-    }
 
     private BookShelf getOpenShelf()
     {
@@ -113,9 +83,13 @@ public class Library
             return;
         }
 
-        out.println("Total Books: " + getTotalBooks());
-        out.println("Total Shelves: " + shelfMap.size());
+        printTotalBooks();
+        printTotalShelves();
         out.println();
+    }
+
+    private void printTotalShelves()
+    {
     }
 
     /**
@@ -124,10 +98,16 @@ public class Library
      */
     public void listAllBooks()
     {
-        if (shelfMap.isEmpty())
+
+        for(Book books : LibraryDB.getAllBooks())
         {
-            out.println("No books found in the library :(");
+            out.println();
+            books.display();
+            out.println("**************");
+            out.println();
         }
+        printTotalBooks();
+
 
 
     }
@@ -135,35 +115,22 @@ public class Library
     /**
      * Calls the recursive counting method
      *
-     * @return the sum of all books in the library
      */
-    public int getTotalBooks()
+    public void printTotalBooks()
     {
-        return countBooksR(new ArrayList<>(shelfMap.values()), 0, 0);
+        totalBooks = LibraryDB.getNumBooks();
+        String isA = "is " + totalBooks + " book in the library";
+        String areA = " are a total of " + totalBooks + " books in the library.";
+        out.println("There" + (totalBooks > 1 ? areA : isA));
+
+
     }
 
     /*
         Private methods
      */
 
-    /**
-     * Recurse the shelf map to get a total count of all books
-     *
-     * @param shelves the BookShelf objects we wish to count
-     * @param index   the current position in the list
-     * @param sum     the total number of all books
-     * @return the sum of all books on the shelves, respecting the terminating steps
-     */
-    private int countBooksR(List<BookShelf> shelves, int index, int sum)
-    {
-        if (shelves == null || index < 0)
-            return 0;
 
-        if (index >= shelves.size())
-            return sum;
-
-        return countBooksR(shelves, index + 1, (sum + shelves.get(index).getNumberOfBooks()));
-    }
 
 
     /**

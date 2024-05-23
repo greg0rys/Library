@@ -8,48 +8,46 @@ import org.sqlite.*;
 
 public class Driver
 {
-    private static final Scanner scanner = new Scanner(System.in);
-    private static Library masterLibrary = new Library();
-    private final static String DB_URL = "jdbc:sqlite:src/Library.db";
+    private static final Scanner SCANNER = new Scanner(System.in);
+    private static final Library LIBRARY_SYSTEM = new Library();
+    private final static String DB_URL ="jdbc:sqlite:newDB.db";
     Driver()
     { }
 
     public static void start() throws SQLException
     {
-        checkDB();
+        if(!checkDB())
+            out.println("Unable to query DB");
         // always do this at least once regardless of condition
         do
         {
             controller();
+            out.println();
 
         } while(menu() != 0);
     }
 
-    private static void checkDB() throws SQLException
+    private static boolean checkDB() throws SQLException
     {
         try(Connection con = DriverManager.getConnection(DB_URL))
         {
             if(con != null)
-                out.println("Connected to the database successfully.");
-            else
-                out.println("Created the database successfully.");
+                return true;
         }
         catch(SQLException e)
         {
             out.println(e.getErrorCode());
         }
+
+        return false;
     }
 
 
     private static void controller()
     {
-        out.println();
-        boolean valid = false;
         Book newBook = null;
         int choice = menu();
-        int totalBooks;
-        String isA;
-        String areA;
+
 
 
         choice = validateChoice(choice) ? choice : 16; // if the choice isn't valid return 16 to show switch error else choice or don't because an invalid choice invokes default
@@ -58,36 +56,26 @@ public class Driver
 
         switch (choice)
         {
+
             case 0:
-                out.println("Goodbye!");
                 break;
             case 1:
-                totalBooks = LibraryDB.getNumBooks();
-                isA = " is " + totalBooks + " in the library";
-                areA = " are a total of " + totalBooks + " books";
-                out.println("There" + (totalBooks > 1 ? areA : isA));
-//                controller();
+                LIBRARY_SYSTEM.printTotalBooks();
                 break;
             case 2:
-               newBook = Helpers.collectNewBookData();
-               LibraryDB.addBookToLibrary(newBook);
-               out.println();
-//               controller();
+                LIBRARY_SYSTEM.addBook();
                 break;
             case 3:
-                Helpers.printArrayList(LibraryDB.getAllBooks());
-//                controller();
+                LIBRARY_SYSTEM.listAllBooks();
                 break;
             case 4:
-//                controller();
+                out.println("COMING SOON XXX");
                 break;
             case 16:
                 out.println("Not a valid choice, try again");
-                // controller(); // if you just run displayMenu() it causes a crash because there is no input given in displayMenu so it just ends the program. Call the controller again to start over.
                 break;
             default:
                 out.println();
-                // controller();
                 break;
         }
     }
@@ -110,7 +98,7 @@ public class Driver
         out.println("0. Exit");
 
         out.print("Please enter your choice: ");
-        return scanner.nextInt();
+        return SCANNER.nextInt();
     }
 
 }

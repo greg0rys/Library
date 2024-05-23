@@ -11,6 +11,7 @@ public class Helpers
 {
     private static final int MAX_BOOK_ID = 300500;
     private static final int MAX_SHELF_ID = 400567;
+    private static final int MAX_CARD_NUM = (Integer.MAX_VALUE / 4);
     private static final Random RANDOM = new Random();
 
 
@@ -25,6 +26,8 @@ public class Helpers
     {
         return RANDOM.nextInt(MAX_SHELF_ID);
     }
+
+    static public int getCardNum() { return RANDOM.nextInt(MAX_CARD_NUM); }
 
     static public Book collectNewBookData()
     {

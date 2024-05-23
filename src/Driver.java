@@ -17,7 +17,12 @@ public class Driver
     public static void start() throws SQLException
     {
         checkDB();
-        controller();
+        // always do this at least once regardless of condition
+        do
+        {
+            controller();
+
+        } while(menu() != 0);
     }
 
     private static void checkDB() throws SQLException
@@ -49,6 +54,8 @@ public class Driver
 
         choice = validateChoice(choice) ? choice : 16; // if the choice isn't valid return 16 to show switch error else choice or don't because an invalid choice invokes default
 
+
+
         switch (choice)
         {
             case 0:
@@ -59,27 +66,28 @@ public class Driver
                 isA = " is " + totalBooks + " in the library";
                 areA = " are a total of " + totalBooks + " books";
                 out.println("There" + (totalBooks > 1 ? areA : isA));
-                controller();
+//                controller();
                 break;
             case 2:
                newBook = Helpers.collectNewBookData();
                LibraryDB.addBookToLibrary(newBook);
                out.println();
-               controller();
+//               controller();
                 break;
             case 3:
                 Helpers.printArrayList(LibraryDB.getAllBooks());
-                controller();
+//                controller();
                 break;
             case 4:
 //                controller();
                 break;
             case 16:
                 out.println("Not a valid choice, try again");
-                controller(); // if you just run displayMenu() it causes a crash because there is no input given in displayMenu so it just ends the program. Call the controller again to start over.
+                // controller(); // if you just run displayMenu() it causes a crash because there is no input given in displayMenu so it just ends the program. Call the controller again to start over.
                 break;
             default:
-                controller();
+                out.println();
+                // controller();
                 break;
         }
     }

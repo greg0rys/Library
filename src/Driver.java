@@ -16,18 +16,17 @@ public class Driver
 
     public static void start() throws SQLException
     {
-        if(!checkDB())
+        if(!pingDB())
             out.println("Unable to query DB");
         // always do this at least once regardless of condition
-        do
-        {
-            controller();
-            out.println();
 
-        } while(menu() != 0);
+
+        while(controller(menu())) {
+            controller(menu());
+        }
     }
 
-    private static boolean checkDB() throws SQLException
+    private static boolean pingDB() throws SQLException
     {
         try(Connection con = DriverManager.getConnection(DB_URL))
         {
@@ -43,22 +42,14 @@ public class Driver
     }
 
 
-    private static void controller()
+    private static boolean controller(int selection)
     {
-        Book newBook = null;
-        int choice = menu();
 
-
-
-        choice = validateChoice(choice) ? choice : 16; // if the choice isn't valid return 16 to show switch error else choice or don't because an invalid choice invokes default
-
-
-
-        switch (choice)
+        switch (selection)
         {
 
             case 0:
-                break;
+                return false;
             case 1:
                 LIBRARY_SYSTEM.printTotalBooks();
                 break;
@@ -78,13 +69,10 @@ public class Driver
                 out.println();
                 break;
         }
+
+        return true;
     }
 
-
-    private static boolean validateChoice(int choice)
-    {
-        return choice >= 0 && choice <= 10 || choice == 16;
-    }
 
 
     private static int menu()

@@ -1,5 +1,9 @@
+package LibraryObjects;
+
 import java.util.ArrayList;
 import java.util.Scanner;
+import utils.Helpers;
+import utils.LoanStatus;
 
 import static java.lang.System.out;
 
@@ -13,10 +17,11 @@ public class Book
     private boolean isSeries = false;
     private ArrayList<Book> booksInSeries = null;
     private double price = 0;
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner inputScanner = new Scanner(System.in);
+    private LoanStatus loanStatus;
 
     /**
-     * Create a Book object with all user supplied fields.
+     * Create a LibraryObjects.Book object with all user supplied fields.
      * @param bTitle the Books title
      * @param bAuthor the Books author
      * @param bGenre the Books Genre
@@ -30,6 +35,7 @@ public class Book
         isSeries = inSeries;
         price = bPrice;
 
+        loanStatus = LoanStatus.CHECKED_IN;
         if(isSeries) booksInSeries = new ArrayList<>();
     }
 
@@ -41,10 +47,10 @@ public class Book
         setAllEmpty();
     }
 
-    // Get and Set methods for the Book Object
+    // Get and Set methods for the LibraryObjects.Book Object
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
-    // End Get and Set methods for Book Objects titles
+    // End Get and Set methods for LibraryObjects.Book Objects titles
 
     // Get and Set methods for the Books author
     public String getAuthor() { return author; }
@@ -58,7 +64,7 @@ public class Book
 
     /**
      * Get the Books ID
-     * @return the ID of the Book
+     * @return the ID of the LibraryObjects.Book
      */
     public int getBook_id() { return BOOK_ID; }
 
@@ -70,7 +76,7 @@ public class Book
 
 
     /**
-     * Nicely display all values of the Book.
+     * Nicely display all values of the LibraryObjects.Book.
      */
     public void display()
     {
@@ -115,15 +121,15 @@ public class Book
         boolean valid = false;
 
         out.print("Please enter the book title: ");
-        title = scanner.nextLine();
+        title = inputScanner.nextLine();
         out.print("Please enter the author: ");
-        author = scanner.nextLine();
+        author = inputScanner.nextLine();
         out.print("Please enter the genre: ");
-        genre = scanner.nextLine();
+        genre = inputScanner.nextLine();
         out.print("Is this book part of a series? (true/false): ");
-        isSeries = scanner.nextBoolean();
+        isSeries = inputScanner.nextBoolean();
         out.print("Please enter the price: ");
-        price = scanner.nextDouble();
+        price = inputScanner.nextDouble();
 
 
        newBook.setAll(title, author, genre, isSeries, price);
@@ -156,5 +162,13 @@ public class Book
         price = newPrice;
     }
     public Double getPrice() { return price; }
+
+    public LoanStatus getLoanStatus() { return loanStatus; }
+    public void setLoanStatus(String status)
+    {
+        if(!status.equals(LoanStatus.CHECKED_IN.toString()) || !status.equals(LoanStatus.CHECKED_OUT.toString()))
+            return;
+        loanStatus = LoanStatus.valueOf(status);
+    }
 
 }

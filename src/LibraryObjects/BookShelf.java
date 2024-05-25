@@ -1,3 +1,5 @@
+package LibraryObjects;
+
 import static java.lang.System.out;
 
 import java.util.Hashtable;
@@ -67,7 +69,7 @@ public class BookShelf
     }
 
     /**
-     * Add a new Book to the shelf
+     * Add a new LibraryObjects.Book to the shelf
      * @param newBook the book we are adding.
      * @return true if we added the book false if else.
      */
@@ -88,9 +90,9 @@ public class BookShelf
     }
 
     /**
-     * Find a Book on the shelf.
-     * @param title the name of the Book we are looking for
-     * @return the Book we were looking for null if else.
+     * Find a LibraryObjects.Book on the shelf.
+     * @param title the name of the LibraryObjects.Book we are looking for
+     * @return the LibraryObjects.Book we were looking for null if else.
      */
     public Book findBookByTitle(String title)
     {
@@ -102,7 +104,7 @@ public class BookShelf
     }
 
     /**
-     * Remove a Book by it's title.
+     * Remove a LibraryObjects.Book by it's title.
      * @param title the name of the book we are looking to remove
      * @return true if we were able to remove the book else false.
      */
@@ -115,7 +117,7 @@ public class BookShelf
     }
 
     /**
-     * Move a Book from this Shelf to a new Shelf.
+     * Move a LibraryObjects.Book from this Shelf to a new Shelf.
      * @param title the title of the book we wish to move
      * @param shelf the new shelf the book will be on
      * @return true if complete false is else.

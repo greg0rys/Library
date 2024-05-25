@@ -1,3 +1,9 @@
+package LibraryObjects;
+
+import Data.LibraryDB;
+import utils.Helpers;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class LibraryMember
@@ -5,20 +11,18 @@ public class LibraryMember
     private final int CARD_NUMBER = Helpers.getCardNum();
     private String firstName;
     private String lastName;
-    private ArrayList<Book> totalBooksOnLoan;
+    private final ArrayList<Book> checkedOutBooks = new ArrayList<>();
 
     public LibraryMember()
     {
         firstName = "";
         lastName = "";
-        totalOnLoan = 0;
     }
 
     public LibraryMember(String firstName, String lastName, int totalOnLoan)
     {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.totalOnLoan = totalOnLoan;
     }
 
     public String getFirstName()
@@ -50,9 +54,36 @@ public class LibraryMember
         return CARD_NUMBER;
     }
 
-    public boolean checkOutBook(Book item)
+
+    public int getTotalBooksOnLoan()
     {
-        return false;
+        if(checkedOutBooks.isEmpty())
+            return 0;
+
+        return checkedOutBooks.size();
+    }
+
+    public boolean checkOutBook(Book B) throws SQLException, ClassNotFoundException
+    {
+        if(B == null)
+            return false;
+
+        return LibraryDB.userCheckout(B, CARD_NUMBER);
+    }
+
+    public boolean returnBook(Book B)
+    {
+        if(B == null)
+            return false;
+
+        return LibraryDB.returnBookToLibrary(B, CARD_NUMBER); // maybe not cardnum..
+    }
+
+    public boolean updateCheckedOutList(Book B)
+    {
+        if(checkedOutBooks.isEmpty())
+            return false;
+        return checkedOutBooks.add(B);
     }
 
 }

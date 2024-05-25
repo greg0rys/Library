@@ -1,5 +1,8 @@
-import java.util.*;
+package LibraryObjects;
 
+import java.util.*;
+import Data.LibraryDB;
+import utils.Helpers;
 import static java.lang.System.out;
 
 public class Library
@@ -8,7 +11,7 @@ public class Library
     private HashMap<Integer, BookShelf> shelfMap = null;
     private boolean hasBooks = false;
     private static LibraryDB db;
-    private int totalBooks = 0;
+
     public Library() { /* default constructor */ }
 
     public boolean hasBooks()
@@ -20,7 +23,7 @@ public class Library
     /**
      * Add a shelf to the library
      *
-     * @param bookShelf the BookShelf that will be added to the library
+     * @param bookShelf the LibraryObjects.BookShelf that will be added to the library
      */
     public void addBookShelf(BookShelf bookShelf)
     {
@@ -33,7 +36,7 @@ public class Library
     public void addBook()
     {
         Book newBook = Helpers.collectNewBookData();
-        // now do something to the shelf. This feels relational.... EG Shelf > Book || Book > Shelf
+        // now do something to the shelf. This feels relational.... EG Shelf > LibraryObjects.Book || LibraryObjects.Book > Shelf
         LibraryDB.addBookToLibrary(Helpers.collectNewBookData());
 
 
@@ -54,10 +57,10 @@ public class Library
         return true;
     }
     /**
-     * Get a BookShelf of a given ID number
+     * Get a LibraryObjects.BookShelf of a given ID number
      *
      * @param shelfId the shelf ID of the shelf.
-     * @return the BookShelf object that has a matching shelf ID
+     * @return the LibraryObjects.BookShelf object that has a matching shelf ID
      */
     public BookShelf getBookShelf(int shelfId)
     {
@@ -65,12 +68,12 @@ public class Library
     }
 
     /**
-     * Print a list of all Shelves in the Library - Includes Shelf IDs
+     * Print a list of all Shelves in the LibraryObjects.Library - Includes Shelf IDs
      */
     public void printShelfMap()
     {
         for (Map.Entry<Integer, BookShelf> shelf : shelfMap.entrySet())
-            out.println("Shelf ID: " + shelf.getKey() + ", Book Shelf: " + shelf.getValue());
+            out.println("Shelf ID: " + shelf.getKey() + ", LibraryObjects.Book Shelf: " + shelf.getValue());
     }
 
     /**
@@ -118,7 +121,7 @@ public class Library
      */
     public void printTotalBooks()
     {
-        totalBooks = LibraryDB.getNumBooks();
+        int totalBooks = LibraryDB.getNumBooks();
         String isA = "is " + totalBooks + " book in the library";
         String areA = " are a total of " + totalBooks + " books in the library.";
         out.println("There" + (totalBooks > 1 ? areA : isA));

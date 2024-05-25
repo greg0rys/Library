@@ -1,6 +1,10 @@
+package utils;
+import LibraryObjects.*;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static java.lang.System.out;
@@ -11,6 +15,7 @@ public class Driver
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final Library LIBRARY_SYSTEM = new Library();
     private final static String DB_URL ="jdbc:sqlite:newDB.db";
+    private final static ArrayList<LibraryMember> LIBRARY_MEMBERS = new ArrayList<LibraryMember>();
     Driver()
     { }
 
@@ -77,16 +82,21 @@ public class Driver
 
     private static int menu()
     {
-        out.println("1. Display Book Count");
-        out.println("2. Add New Book To Library");
+        out.println("1. Display LibraryObjects.Book Count");
+        out.println("2. Add New LibraryObjects.Book To LibraryObjects.Library");
         out.println("3. Display All Books");
         out.println("4. Display Shelf Count");
-        out.println("5. Add Shelf To Library");
+        out.println("5. Add Shelf To LibraryObjects.Library");
         out.println(("6. Display All Shelves"));
         out.println("0. Exit");
 
         out.print("Please enter your choice: ");
         return SCANNER.nextInt();
+    }
+
+    public ArrayList<LibraryMember> getLibraryMembers()
+    {
+        return LIBRARY_MEMBERS;
     }
 
 }

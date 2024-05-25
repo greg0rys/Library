@@ -1,3 +1,8 @@
+package Data;
+
+import LibraryObjects.Book;
+import LibraryObjects.BookShelf;
+import LibraryObjects.LibraryMember;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,7 +29,7 @@ public class LibraryDB
 
     public static boolean addBookToLibrary(Book book)
     {
-        out.println("commiting Book");
+        out.println("commiting LibraryObjects.Book");
         try(Connection conn = getConnection())
         {
             PreparedStatement stmt = conn.prepareStatement(BOOK_INSERT);
@@ -108,6 +113,44 @@ public class LibraryDB
     }
 
 
+    public static boolean userCheckout(Book b, int cardNumber) throws SQLException, ClassNotFoundException
+    {
+        ArrayList<LibraryMember> members;
+        if(b == null)
+            return false;
+        try(Connection conn = getConnection())
+        {
+            // check out a book
+            PreparedStatement stmt = conn.prepareStatement(
+                    "INSERT INTO checked_out_books (book_id, card_number) VALUES (?, ?)");
+            stmt.setInt(1, b.getBook_id());
+            stmt.setInt(2, cardNumber);
+            
+            return (stmt.executeUpdate() == 1);
+            
+        }
+    }
+
+    public static boolean returnBookToLibrary(Book b, int cardNumber)
+    {
+        try (Connection conn = getConnection())
+        {
+            PreparedStatement stmt = conn.prepareStatement(
+                    "DELETE FROM checked_out_books WHERE book_id = ? AND card_number = ?");
+            stmt.setInt(1, b.getBook_id());
+            stmt.setInt(2, cardNumber);
+    
+            return (stmt.executeUpdate() == 1);
+        } catch (Exception e)
+        {
+            out.println(e.getMessage());
+            return false;
+        }
+    }
 
 
+
+//    public static void addBookToLibrary(LibraryObjects.Book book)
+//    {
+//    }
 }

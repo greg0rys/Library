@@ -1,6 +1,6 @@
 package UserObjects;
 
-import Data.LibraryDB;
+import Data.DbController;
 import LibraryObjects.Book;
 import utils.Helpers;
 
@@ -13,6 +13,7 @@ public class LibraryMember
     private int cardNumber;
     private String firstName;
     private String lastName;
+    private int booksOnLoan;
     private ArrayList<Book> checkedOutBooks;
 
     public LibraryMember()
@@ -22,13 +23,16 @@ public class LibraryMember
         this.cardNumber = Helpers.getCardNum();
     }
 
-    public LibraryMember(String firstName, String lastName, int cardNum)
+    public LibraryMember(String firstName, String lastName, int cardNum, int numBooksOnLoan)
     {
         this.firstName = firstName;
         this.lastName = lastName;
         this.cardNumber = cardNum;
-        this.checkedOutBooks = LibraryDB.getUsersBooks(cardNum);
+        this.booksOnLoan = numBooksOnLoan;
+
     }
+
+
 
     public String getFirstName()
     {
@@ -73,7 +77,7 @@ public class LibraryMember
         if(B == null)
             return false;
 
-        return LibraryDB.userCheckout(B, cardNumber);
+        return DbController.userCheckout(B, cardNumber);
     }
 
     public boolean returnBook(Book B)
@@ -81,7 +85,7 @@ public class LibraryMember
         if(B == null)
             return false;
 
-        return LibraryDB.returnBookToLibrary(B, cardNumber); // maybe not cardnum..
+        return DbController.returnBookToLibrary(B, cardNumber); // maybe not cardnum..
     }
 
     public boolean updateCheckedOutList(Book B)

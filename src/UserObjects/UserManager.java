@@ -1,9 +1,11 @@
 package UserObjects;
-import Data.LibraryDB;
+import Data.DbController;
 import utils.Driver;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import static java.lang.System.out;
 
 public class UserManager
@@ -63,13 +65,22 @@ public class UserManager
     private static int managerMenu()
     {
 
-        return 0;
+        out.println("1. Add New Member.");
+        out.println("2. Display All Members.");
+        out.println("3. Check Book Out.");
+        out.println("4. Return Book.");
+        out.println("5. Update Member Information.");
+        out.println("6. Display Books On Loan To User");
+        out.println("0. Exit");
+
+        out.println("Enter your choice: ");
+        return new Scanner(System.in).nextInt();
     }
 
     private static boolean createNewUser(LibraryMember member)
     {
 
-        return LibraryDB.addNewMember(member);
+        return DbController.addNewMember(member);
     }
 
     private static void displayAllMembers()

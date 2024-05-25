@@ -148,9 +148,38 @@ public class LibraryDB
         }
     }
 
+    public static ArrayList<Book> getUsersBooks(int cardNum)
+    {
+        try (Connection conn = getConnection())
+        {
+            PreparedStatement stmt = conn.prepareStatement(
+                    "SELECT * FROM checked_out_books WHERE card_number = ?");
+            stmt.setInt(1, cardNum);
+            ResultSet rs = stmt.executeQuery();
+    
+            ArrayList<Book> userBooks = new ArrayList<>();
+            while (rs.next())
+            {
+                int bookId = rs.getInt("book_id");
+                Book book = findBookById(bookId);
+                userBooks.add(book);
+            }
+    
+            return userBooks;
+        } catch (Exception e)
+        {
+            out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    private static Book findBookById(int bookId)
+    {
+        return new Book();
+    }
 
 
-//    public static void addBookToLibrary(LibraryObjects.Book book)
-//    {
-//    }
+    public static void addNewMember(LibraryMember newUser)
+    {
+    }
 }

@@ -16,12 +16,14 @@ public class Driver
     private static final Library LIBRARY_SYSTEM = new Library();
     private final static String DB_URL ="jdbc:sqlite:newDB.db";
     private final static ArrayList<LibraryMember> LIBRARY_MEMBERS = new ArrayList<LibraryMember>();
+    private static UserManager UM;
+
     Driver()
     { }
 
     public static void start() throws SQLException
     {
-        if(!pingDB())
+        if(pingDB())
             out.println("Unable to query DB");
         // always do this at least once regardless of condition
 
@@ -31,19 +33,30 @@ public class Driver
         }
     }
 
-    private static boolean pingDB() throws SQLException
+    public static void resume() throws SQLException
+    {
+        if(pingDB())
+            out.println("Unable to query DB");
+
+
+        while(controller(menu()))
+            controller(menu());
+
+    }
+
+    private static boolean pingDB()
     {
         try(Connection con = DriverManager.getConnection(DB_URL))
         {
             if(con != null)
-                return true;
+                return false;
         }
         catch(SQLException e)
         {
             out.println(e.getErrorCode());
         }
 
-        return false;
+        return true;
     }
 
 
@@ -65,7 +78,7 @@ public class Driver
                 LIBRARY_SYSTEM.listAllBooks();
                 break;
             case 4:
-                out.println("COMING SOON XXX");
+                UM.start(LIBRARY_MEMBERS);
                 break;
             case 16:
                 out.println("Not a valid choice, try again");
@@ -93,6 +106,55 @@ public class Driver
         out.print("Please enter your choice: ");
         return SCANNER.nextInt();
     }
+
+    public static void userManagementMenu()
+    {
+        out.println("1. Display Library Member Count");
+        out.println("2. Add New Library Member");
+        out.println("3. Display All Library Members");
+        out.println("4. Display Total Books on Loan");
+        out.println("5. Check Out Book");
+        out.println("6. Return Book");
+        out.println("0. Exit");
+
+        out.print("Please enter your choice: ");
+        userController(SCANNER.nextInt());
+    }
+
+    public static void userController(int selection)
+    {
+        switch (selection)
+        {
+            case 1:
+                out.println("There are: " + LIBRARY_MEMBERS.size() + " Members");
+                break;
+            case 2:
+                new UserManager();
+                LIBRARY_SYSTEM.addBook();
+                break;
+            case 3:
+                LIBRARY_SYSTEM.listAllBooks();
+                break;
+            case 4:
+                LIBRARY_SYSTEM.printShelfMap();
+                break;
+            case 5:
+                LIBRARY_SYSTEM.addBookShelf();
+                break;
+            case 6:
+                LIBRARY_SYSTEM.printShelfMap();
+                break;
+            case 0:
+                return false;
+            default:
+                out.println("Not a valid choice, try again");
+                break;
+        }
+
+        return true;
+    }
+
+
 
     public ArrayList<LibraryMember> getLibraryMembers()
     {

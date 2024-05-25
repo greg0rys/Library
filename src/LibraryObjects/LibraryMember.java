@@ -2,27 +2,32 @@ package LibraryObjects;
 
 import Data.LibraryDB;
 import utils.Helpers;
+import Data.LibraryDB;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class LibraryMember
 {
-    private final int CARD_NUMBER = Helpers.getCardNum();
+    @SuppressWarnings("FieldMayBeFinal")
+    private int cardNumber;
     private String firstName;
     private String lastName;
-    private final ArrayList<Book> checkedOutBooks = new ArrayList<>();
+    private ArrayList<Book> checkedOutBooks;
 
     public LibraryMember()
     {
-        firstName = "";
-        lastName = "";
+        this.firstName = "";
+        this.lastName = "";
+        this.cardNumber = Helpers.getCardNum();
     }
 
-    public LibraryMember(String firstName, String lastName, int totalOnLoan)
+    public LibraryMember(String firstName, String lastName, int cardNum)
     {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.cardNumber = cardNum;
+        this.checkedOutBooks = LibraryDB.getUsersBooks(cardNum);
     }
 
     public String getFirstName()
@@ -41,17 +46,17 @@ public class LibraryMember
 
     public void setFirstName(String fName)
     {
-        firstName = fName;
+        this.firstName = fName;
     }
 
     public void setLastName(String lName)
     {
-        lastName = lName;
+        this.lastName = lName;
     }
 
     public int getCardNumber()
     {
-        return CARD_NUMBER;
+        return cardNumber;
     }
 
 
@@ -68,7 +73,7 @@ public class LibraryMember
         if(B == null)
             return false;
 
-        return LibraryDB.userCheckout(B, CARD_NUMBER);
+        return LibraryDB.userCheckout(B, cardNumber);
     }
 
     public boolean returnBook(Book B)
@@ -76,7 +81,7 @@ public class LibraryMember
         if(B == null)
             return false;
 
-        return LibraryDB.returnBookToLibrary(B, CARD_NUMBER); // maybe not cardnum..
+        return LibraryDB.returnBookToLibrary(B, cardNumber); // maybe not cardnum..
     }
 
     public boolean updateCheckedOutList(Book B)
@@ -86,4 +91,12 @@ public class LibraryMember
         return checkedOutBooks.add(B);
     }
 
+    public LibraryMember collectInfo()
+    {
+        return new LibraryMember();
+    }
+
+    public void display()
+    {
+    }
 }

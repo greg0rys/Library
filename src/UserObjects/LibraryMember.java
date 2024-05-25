@@ -1,8 +1,8 @@
-package LibraryObjects;
+package UserObjects;
 
 import Data.LibraryDB;
+import LibraryObjects.Book;
 import utils.Helpers;
-import Data.LibraryDB;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

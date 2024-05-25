@@ -2,7 +2,7 @@ package Data;
 
 import LibraryObjects.Book;
 import LibraryObjects.BookShelf;
-import LibraryObjects.LibraryMember;
+import UserObjects.LibraryMember;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -179,7 +179,9 @@ public class LibraryDB
     }
 
 
-    public static void addNewMember(LibraryMember newUser)
+    public static boolean addNewMember(LibraryMember newUser)
     {
+
+        return false;
     }
 }

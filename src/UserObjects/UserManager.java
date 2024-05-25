@@ -1,11 +1,9 @@
-package utils;
-
+package UserObjects;
 import Data.LibraryDB;
-import LibraryObjects.LibraryMember;
+import utils.Driver;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import static java.lang.System.out;
 
 public class UserManager
@@ -33,10 +31,14 @@ public class UserManager
                     Driver.resume();
                     break;
                 case 1:
-                    createNewUser();
-                    LibraryDB.addNewMember(createNewUser());
+                    outcome(createNewUser(new LibraryMember().collectInfo()), 1);
+                    break;
                 case 2:
                     displayAllMembers();
+                    break;
+                case 3:
+                    checkBookOut(getMember());
+                    break;
                 default:
                     out.println("No a valid menu choice try again");
                     break;
@@ -46,16 +48,28 @@ public class UserManager
 
     }
 
+    private static void outcome(boolean newUser, int i)
+    {
+    }
+
+    private static LibraryMember getMember()
+    {
+        if(members.isEmpty())
+            return null;
+
+     return new LibraryMember();
+    }
+
     private static int managerMenu()
     {
 
         return 0;
     }
 
-    private static LibraryMember createNewUser()
+    private static boolean createNewUser(LibraryMember member)
     {
 
-        return new LibraryMember().collectInfo();
+        return LibraryDB.addNewMember(member);
     }
 
     private static void displayAllMembers()
@@ -68,5 +82,10 @@ public class UserManager
 
         for(LibraryMember member : members)
             member.display();
+    }
+
+    private static void checkBookOut(LibraryMember member)
+    {
+
     }
 }

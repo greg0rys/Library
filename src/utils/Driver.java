@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static java.lang.System.out;
+
+import UserObjects.LibraryMember;
+import UserObjects.UserManager;
 import org.sqlite.*;
 
 public class Driver
@@ -60,7 +63,7 @@ public class Driver
     }
 
 
-    private static boolean controller(int selection)
+    private static boolean controller(int selection) throws SQLException
     {
 
         switch (selection)
@@ -118,41 +121,41 @@ public class Driver
         out.println("0. Exit");
 
         out.print("Please enter your choice: ");
-        userController(SCANNER.nextInt());
+//        userController(SCANNER.nextInt());
     }
 
-    public static void userController(int selection)
-    {
-        switch (selection)
-        {
-            case 1:
-                out.println("There are: " + LIBRARY_MEMBERS.size() + " Members");
-                break;
-            case 2:
-                new UserManager();
-                LIBRARY_SYSTEM.addBook();
-                break;
-            case 3:
-                LIBRARY_SYSTEM.listAllBooks();
-                break;
-            case 4:
-                LIBRARY_SYSTEM.printShelfMap();
-                break;
-            case 5:
-                LIBRARY_SYSTEM.addBookShelf();
-                break;
-            case 6:
-                LIBRARY_SYSTEM.printShelfMap();
-                break;
-            case 0:
-                return false;
-            default:
-                out.println("Not a valid choice, try again");
-                break;
-        }
-
-        return true;
-    }
+//    public static void userController(int selection)
+//    {
+//        switch (selection)
+//        {
+//            case 1:
+//                out.println("There are: " + LIBRARY_MEMBERS.size() + " Members");
+//                break;
+//            case 2:
+//                new UserManager();
+//                LIBRARY_SYSTEM.addBook();
+//                break;
+//            case 3:
+//                LIBRARY_SYSTEM.listAllBooks();
+//                break;
+//            case 4:
+//                LIBRARY_SYSTEM.printShelfMap();
+//                break;
+//            case 5:
+//                LIBRARY_SYSTEM.addBookShelf();
+//                break;
+//            case 6:
+//                LIBRARY_SYSTEM.printShelfMap();
+//                break;
+//            case 0:
+//                return false;
+//            default:
+//                out.println("Not a valid choice, try again");
+//                break;
+//        }
+//
+//        return true;
+//    }
 
 
 

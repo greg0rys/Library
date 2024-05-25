@@ -19,7 +19,6 @@ public class Driver
     private static final Library LIBRARY_SYSTEM = new Library();
     private final static String DB_URL ="jdbc:sqlite:newDB.db";
     private final static ArrayList<LibraryMember> LIBRARY_MEMBERS = new ArrayList<LibraryMember>();
-    private static UserManager UM;
 
     Driver()
     { }
@@ -49,17 +48,7 @@ public class Driver
 
     private static boolean pingDB()
     {
-        try(Connection con = DriverManager.getConnection(DB_URL))
-        {
-            if(con != null)
-                return false;
-        }
-        catch(SQLException e)
-        {
-            out.println(e.getErrorCode());
-        }
 
-        return true;
     }
 
 
@@ -81,7 +70,7 @@ public class Driver
                 LIBRARY_SYSTEM.listAllBooks();
                 break;
             case 4:
-                UM.start(LIBRARY_MEMBERS);
+                UserManager.start(LIBRARY_MEMBERS);
                 break;
             case 16:
                 out.println("Not a valid choice, try again");

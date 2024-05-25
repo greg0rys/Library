@@ -3,7 +3,7 @@ package LibraryObjects;
 import java.util.ArrayList;
 import java.util.Scanner;
 import utils.Helpers;
-import utils.LoanStatus;
+import Constants.LoanStatus;
 
 import static java.lang.System.out;
 
@@ -27,7 +27,7 @@ public class Book
      * @param bGenre the Books Genre
      * @param inSeries is the book a Series? T/F
      */
-    public Book(String bTitle, String bAuthor, String bGenre, boolean inSeries, double bPrice)
+    public Book(String bTitle, String bAuthor, String bGenre, boolean inSeries, double bPrice, LoanStatus bLoanStatus)
     {
         title = bTitle;
         author = bAuthor;
@@ -35,7 +35,7 @@ public class Book
         isSeries = inSeries;
         price = bPrice;
 
-        loanStatus = LoanStatus.CHECKED_IN;
+        loanStatus = bLoanStatus;
         if(isSeries) booksInSeries = new ArrayList<>();
     }
 

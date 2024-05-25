@@ -2,6 +2,9 @@ package utils;
 
 import LibraryObjects.Book;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 import static java.lang.System.out;
@@ -32,6 +35,21 @@ public class Helpers
     }
 
     static public int getCardNum() { return RANDOM.nextInt(MAX_CARD_NUM); }
+
+    static public boolean pingDB(String URL)
+    {
+        try(Connection con = DriverManager.getConnection(URL))
+        {
+            if(con != null)
+                return false;
+        }
+        catch(SQLException e)
+        {
+            out.println(e.getErrorCode());
+        }
+
+        return true;
+    }
 
     static public Book collectNewBookData()
     {

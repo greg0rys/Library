@@ -1,7 +1,7 @@
 package LibraryObjects;
 
 import java.util.*;
-import Data.LibraryDB;
+import Data.DbController;
 import utils.Helpers;
 import static java.lang.System.out;
 
@@ -10,7 +10,7 @@ public class Library
 
     private HashMap<Integer, BookShelf> shelfMap = null;
     private boolean hasBooks = false;
-    private static LibraryDB db;
+    private static DbController db;
 
     public Library() { /* default constructor */ }
 
@@ -37,7 +37,7 @@ public class Library
     {
         Book newBook = Helpers.collectNewBookData();
         // now do something to the shelf. This feels relational.... EG Shelf > LibraryObjects.Book || LibraryObjects.Book > Shelf
-        LibraryDB.addBookToLibrary(Helpers.collectNewBookData());
+        DbController.addBookToLibrary(Helpers.collectNewBookData());
 
 
     }
@@ -102,7 +102,7 @@ public class Library
     public void listAllBooks()
     {
 
-        for(Book books : LibraryDB.getAllBooks())
+        for(Book books : DbController.getAllBooks())
         {
             out.println();
             books.display();
@@ -121,7 +121,7 @@ public class Library
      */
     public void printTotalBooks()
     {
-        int totalBooks = LibraryDB.getNumBooks();
+        int totalBooks = DbController.getNumBooks();
         String isA = "is " + totalBooks + " book in the library";
         String areA = " are a total of " + totalBooks + " books in the library.";
         out.println("There" + (totalBooks > 1 ? areA : isA));

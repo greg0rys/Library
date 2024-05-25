@@ -1,4 +1,4 @@
-package utils;
+package Constants;
 
 public enum LoanStatus
 {

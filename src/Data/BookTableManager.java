@@ -1,6 +1,7 @@
 package Data;
 
 import Constants.LoanStatus;
+import LibraryObjects.Book;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,10 +12,10 @@ import java.util.ArrayList;
 
 import static java.lang.System.out;
 
-public class Book
+public class BookTableManager
 {
     private final static String SELECT_ALL = "SELECT * FROM Books";
-    private static final ArrayList<LibraryObjects.Book> allBooks = new ArrayList<>();
+    private static final ArrayList<Book> allBooks = new ArrayList<>();
     private final static String BOOK_INSERT = "INSERT INTO Books(Title, Author, Genre, aSeries, Price) VALUES(?,?,?,?,?)";
 
 

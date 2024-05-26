@@ -2,6 +2,7 @@ package Data;
 
 import LibraryObjects.Book;
 import Constants.LoanStatus;
+import Nodes.CheckedBookNode;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,22 +13,36 @@ import java.util.List;
 
 import static java.lang.System.out;
 
-public class BookShelf
+public class CheckedBooksManager extends DbController
 {
     private final static String GET_ALL_BOOKS_FOR_USER = "SELECT * FROM CheckedOutBooks WHERE UserCardNum = ?";
     private final static String REMOVE_BOOK_FOR_USER = "DELETE FROM CheckedOutBooks WHERE UserCardNum = ?";
     private final static String ADD_BOOK_FOR_USER = "INSERT INTO CheckedOutBooks(BookID, UserCardNum) VALUES(?,?)";
+    private final static String GET_ALL_CHECKED_BOOKS = "SELECT * FROM CheckedOutBooks";
     private final static List<Book> CHECKED_OUT_BOOKS = new ArrayList<>();
 
-    public BookShelf() throws SQLException
+    public CheckedBooksManager() throws SQLException
     {
-        if(!DbInterface.pingDB())
+        super();
+        if(!pingDB())
             out.println("Unable to ping db - try again.");
+    }
+
+    public List<CheckedBookNode> getAllCheckedOutBooks()
+    {
+        try(Connection conn = getConnection())
+        {
+
+        } catch(RuntimeException e)
+        {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public List<Book> getAllBooksForUser(int userCardNum) throws SQLException, ClassNotFoundException
     {
-        try(Connection conn = DbInterface.getConnection())
+        try(Connection conn = getConnection())
         {
             List<Book> books = new ArrayList<>();
             PreparedStatement ps = conn.prepareStatement(GET_ALL_BOOKS_FOR_USER);
@@ -54,7 +69,7 @@ public class BookShelf
     public boolean removeCheckedOutBook(int userCardNum)
     {
 
-        try(Connection conn = DbInterface.getConnection())
+        try(Connection conn = getConnection())
         {
             PreparedStatement ps = conn.prepareStatement(REMOVE_BOOK_FOR_USER);
             ps.setInt(1, userCardNum);
@@ -71,7 +86,7 @@ public class BookShelf
         if(B == null || userCardNumber <= 0)
             return false;
 
-        try(Connection conn = DbInterface.getConnection())
+        try(Connection conn = getConnection())
         {
             PreparedStatement ps = conn.prepareStatement(ADD_BOOK_FOR_USER);
             ps.setInt(1, B.getBook_id());

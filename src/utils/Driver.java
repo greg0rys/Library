@@ -1,17 +1,15 @@
 package utils;
+import Data.DbController;
 import LibraryObjects.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import static java.lang.System.out;
 
+import Nodes.Node;
 import UserObjects.LibraryMember;
-import UserObjects.UserManager;
-import org.sqlite.*;
 
 public class Driver
 {
@@ -19,37 +17,23 @@ public class Driver
     private static final Library LIBRARY_SYSTEM = new Library();
     private final static String DB_URL ="jdbc:sqlite:newDB.db";
     private final static ArrayList<LibraryMember> LIBRARY_MEMBERS = new ArrayList<LibraryMember>();
+    private  static DbController DBManager;
+    private static Node currDbState;
 
     Driver()
     { }
 
     public static void start() throws SQLException
     {
-        if(pingDB())
-            out.println("Unable to query DB");
-        // always do this at least once regardless of condition
-
+        DBManager = new DbController(currDbState);
 
         while(controller(menu())) {
             controller(menu());
         }
     }
 
-    public static void resume() throws SQLException
-    {
-        if(pingDB())
-            out.println("Unable to query DB");
 
 
-        while(controller(menu()))
-            controller(menu());
-
-    }
-
-    private static boolean pingDB()
-    {
-
-    }
 
 
     private static boolean controller(int selection) throws SQLException

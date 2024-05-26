@@ -1,6 +1,6 @@
 package UserObjects;
 
-import Data.BookShelf;
+import Data.CheckedBooksManager;
 import LibraryObjects.Book;
 import utils.Helpers;
 
@@ -77,7 +77,7 @@ public class LibraryMember
         if(B == null)
             return false;
 
-        return BookShelf.addCheckedOutBook(cardNumber);
+        return CheckedBooksManager.addCheckedOutBook(cardNumber);
     }
 
     public boolean returnBook(Book B)
@@ -85,7 +85,7 @@ public class LibraryMember
         if(B == null)
             return false;
 
-        return BookShelf.returnBookToLibrary(B, cardNumber); // maybe not cardnum..
+        return CheckedBooksManager.returnBookToLibrary(B.getBook_id(), cardNumber);
     }
 
     public boolean updateCheckedOutList(Book B)

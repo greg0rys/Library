@@ -11,31 +11,25 @@ import java.util.List;
 
 import static java.lang.System.out;
 
-public class UserTableManager
+public class UserTableManager extends DbController
 {
     private final static String GET_ALL_USERS = "SELECT * FROM LibraryUser";
     private final static String ADD_NEW_USER = "INSERT INTO LibraryUser VALUES(?,?,?,?)";
     private final static String DELETE_USER = "DELETE FROM LibraryUser WHERE UserCardNumber = ?";
-    private final static List<LibraryMember> MEMBERS = new ArrayList<LibraryMember>();
+    private final static List<LibraryMember> MEMBERS = new ArrayList<>();
 
     public UserTableManager()
     {
-        try
-        {
-            if(!DbInterface.pingDB())
-                out.println("Unable to query db at this time.");
+        super();
+       getAllMembers(MEMBERS);
 
-            getAllMembers(MEMBERS);
-        } catch (SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
     }
 
-    public void getAllMembers(List<LibraryMember> members)
+
+    private void getAllMembers(List<LibraryMember> members)
     {
 
-        try(Connection conn = DbInterface.getConnection())
+        try(Connection conn = getConnection())
         {
             PreparedStatement ps = conn.prepareStatement(GET_ALL_USERS);
             ResultSet rs = ps.executeQuery();
@@ -59,6 +53,8 @@ public class UserTableManager
     {
         return MEMBERS;
     }
+
+    public boolean
 
 
 

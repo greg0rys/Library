@@ -1,7 +1,6 @@
 package Data;
 
 import Constants.LoanStatus;
-import LibraryObjects.Book;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,14 +11,14 @@ import java.util.ArrayList;
 
 import static java.lang.System.out;
 
-public class BookTableManager
+public class Book
 {
     private final static String SELECT_ALL = "SELECT * FROM Books";
-    private static final ArrayList<Book> allBooks = new ArrayList<>();
+    private static final ArrayList<LibraryObjects.Book> allBooks = new ArrayList<>();
     private final static String BOOK_INSERT = "INSERT INTO Books(Title, Author, Genre, aSeries, Price) VALUES(?,?,?,?,?)";
 
 
-    public static ArrayList<Book> getAllBooks()
+    public static ArrayList<LibraryObjects.Book> getAllBooks()
     {
         int bookCount;
         boolean singleBook;
@@ -29,8 +28,8 @@ public class BookTableManager
             ResultSet rs = stmt.executeQuery(SELECT_ALL);
 
             while (rs.next())
-                allBooks.add(new Book(rs.getString("title"), rs.getString("author"), rs.getString("genre"),
-                                      rs.getBoolean("aSeries"), rs.getDouble("price"), LoanStatus.valueOf(rs.getString("loanStatus"))));
+                allBooks.add(new LibraryObjects.Book(rs.getString("title"), rs.getString("author"), rs.getString("genre"),
+                                                     rs.getBoolean("aSeries"), rs.getDouble("price"), LoanStatus.valueOf(rs.getString("loanStatus"))));
 
 
         }
@@ -42,7 +41,7 @@ public class BookTableManager
         return allBooks;
     }
 
-    public static boolean addBook(Book book)
+    public static boolean addBook(LibraryObjects.Book book)
     {
         out.println("commiting LibraryObjects.Book");
         try(Connection conn = DbInterface.getConnection())

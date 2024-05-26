@@ -1,6 +1,6 @@
 package UserObjects;
 
-import Data.DbController;
+import Data.BookShelf;
 import LibraryObjects.Book;
 import utils.Helpers;
 
@@ -77,7 +77,7 @@ public class LibraryMember
         if(B == null)
             return false;
 
-        return DbController.userCheckout(B, cardNumber);
+        return BookShelf.addCheckedOutBook(cardNumber);
     }
 
     public boolean returnBook(Book B)
@@ -85,7 +85,7 @@ public class LibraryMember
         if(B == null)
             return false;
 
-        return DbController.returnBookToLibrary(B, cardNumber); // maybe not cardnum..
+        return BookShelf.returnBookToLibrary(B, cardNumber); // maybe not cardnum..
     }
 
     public boolean updateCheckedOutList(Book B)

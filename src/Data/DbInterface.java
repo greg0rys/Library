@@ -8,6 +8,7 @@ public interface DbInterface
 {
     String DB_URL ="jdbc:sqlite:newDB.db";
 
+
     static Connection getConnection() throws SQLException
     {
         return DriverManager.getConnection(DB_URL);

@@ -1,7 +1,6 @@
 package Data;
 
 import LibraryObjects.Book;
-import utils.Helpers;
 import Constants.LoanStatus;
 
 import java.sql.Connection;
@@ -13,14 +12,14 @@ import java.util.List;
 
 import static java.lang.System.out;
 
-public class CheckedOutTableManager
+public class BookShelf
 {
     private final static String GET_ALL_BOOKS_FOR_USER = "SELECT * FROM CheckedOutBooks WHERE UserCardNum = ?";
     private final static String REMOVE_BOOK_FOR_USER = "DELETE FROM CheckedOutBooks WHERE UserCardNum = ?";
     private final static String ADD_BOOK_FOR_USER = "INSERT INTO CheckedOutBooks(BookID, UserCardNum) VALUES(?,?)";
     private final static List<Book> CHECKED_OUT_BOOKS = new ArrayList<>();
 
-    public CheckedOutTableManager() throws SQLException
+    public BookShelf() throws SQLException
     {
         if(!DbInterface.pingDB())
             out.println("Unable to ping db - try again.");

@@ -12,18 +12,19 @@ import java.util.ArrayList;
 
 import static java.lang.System.out;
 
-public class BookTableManager
+public class BookTableManager extends DbController
 {
-    private final static String SELECT_ALL = "SELECT * FROM Books";
+    private final String SELECT_ALL = "SELECT * FROM Books";
     private static final ArrayList<Book> allBooks = new ArrayList<>();
-    private final static String BOOK_INSERT = "INSERT INTO Books(Title, Author, Genre, aSeries, Price) VALUES(?,?,?,?,?)";
+    private final String BOOK_INSERT = "INSERT INTO Books(Title, Author, Genre, aSeries, Price) VALUES(?,?,?,?,?)";
 
 
-    public static ArrayList<LibraryObjects.Book> getAllBooks()
+    public BookTableManager() { super(); }
+    public ArrayList<LibraryObjects.Book> getAllBooks()
     {
         int bookCount;
         boolean singleBook;
-        try (Connection conn = DbInterface.getConnection())
+        try (Connection conn = getConnection())
         {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(SELECT_ALL);
@@ -42,10 +43,10 @@ public class BookTableManager
         return allBooks;
     }
 
-    public static boolean addBook(LibraryObjects.Book book)
+    public boolean addBook(LibraryObjects.Book book)
     {
         out.println("commiting LibraryObjects.Book");
-        try(Connection conn = DbInterface.getConnection())
+        try(Connection conn = getConnection())
         {
             PreparedStatement stmt = conn.prepareStatement(BOOK_INSERT);
             stmt.setString(1, book.getTitle());
@@ -62,7 +63,7 @@ public class BookTableManager
         }
     }
 
-    public static int getTotalBooks()
+    public int getTotalBooks()
     {
         return allBooks.size();
     }

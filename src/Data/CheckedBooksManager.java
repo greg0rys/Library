@@ -4,10 +4,7 @@ import LibraryObjects.Book;
 import Constants.LoanStatus;
 import Nodes.CheckedBookNode;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +16,7 @@ public class CheckedBooksManager extends DbController
     private final static String REMOVE_BOOK_FOR_USER = "DELETE FROM CheckedOutBooks WHERE UserCardNum = ?";
     private final static String ADD_BOOK_FOR_USER = "INSERT INTO CheckedOutBooks(BookID, UserCardNum) VALUES(?,?)";
     private final static String GET_ALL_CHECKED_BOOKS = "SELECT * FROM CheckedOutBooks";
-    private final static List<Book> CHECKED_OUT_BOOKS = new ArrayList<>();
+    private final static List<CheckedBookNode> CHECKED_OUT_BOOKS = new ArrayList<>();
 
     public CheckedBooksManager() throws SQLException
     {
@@ -32,8 +29,19 @@ public class CheckedBooksManager extends DbController
     {
         try(Connection conn = getConnection())
         {
+            Statement state = conn.prepareStatement(GET_ALL_CHECKED_BOOKS);
+            ResultSet rs = state.executeQuery(GET_ALL_CHECKED_BOOKS);
 
-        } catch(RuntimeException e)
+            while(rs.next())
+         gi   {
+                CHECKED_OUT_BOOKS.add(new Book(rs.getString("title"), rs.getString("author"), rs.getString("genre"),
+                                   rs.getBoolean("in_series"), rs.getDouble("price"),
+                                   LoanStatus.valueOf(rs.getString("loan_status"))));
+            }
+
+            return CHECKED_OUT_BOOKS;
+
+        } catch(RuntimeException | SQLException e)
         {
             throw new RuntimeException(e);
         }

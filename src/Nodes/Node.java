@@ -1,9 +1,7 @@
 package Nodes;
 
-import Data.CheckedBooksManager;
-import Data.UserTableManager;
 import LibraryObjects.Book;
-import UserObjects.LibraryMember;
+import LibraryObjects.LibraryMember;
 
 import java.util.ArrayList;
 import java.util.List;

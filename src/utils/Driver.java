@@ -9,34 +9,40 @@ import java.util.Scanner;
 import static java.lang.System.out;
 
 import Nodes.Node;
-import UserObjects.LibraryMember;
+import ManagerClasses.*;
 
 public class Driver
 {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final Library LIBRARY_SYSTEM = new Library();
     private final static String DB_URL ="jdbc:sqlite:newDB.db";
-    private final static ArrayList<LibraryMember> LIBRARY_MEMBERS = new ArrayList<LibraryMember>();
-    private  static DbController DBManager;
+    private final static ArrayList<LibraryMember> LIBRARY_MEMBERS = new ArrayList<>();
+    private DbController DBManager;
     private static Node currDbState;
 
-    Driver()
+    public Driver()
     { }
 
-    public static void start() throws SQLException
+    public void start() throws SQLException
     {
         DBManager = new DbController(currDbState);
 
-        while(controller(menu())) {
+//        while(controller(menu())) {
+//            controller(menu());
+//        }
+
+        do
+        {
             controller(menu());
         }
+        while(controller(menu()));
     }
 
 
 
 
 
-    private static boolean controller(int selection) throws SQLException
+    private  boolean controller(int selection) throws SQLException
     {
 
         switch (selection)
@@ -54,7 +60,7 @@ public class Driver
                 LIBRARY_SYSTEM.listAllBooks();
                 break;
             case 4:
-                UserManager.start(LIBRARY_MEMBERS);
+                new UserManager().start(LIBRARY_MEMBERS, true);
                 break;
             case 16:
                 out.println("Not a valid choice, try again");

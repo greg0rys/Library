@@ -1,7 +1,7 @@
 
 
 INSERT INTO CheckedOutBooks (UserCardNumber, BookNumber)
-VALUES ((SELECT LibraryUser.UserCardNumber FROM LibraryUser WHERE FirstName = 'Gregory'), (SELECT Books.ID FROM Books WHERE ID = 4));
+VALUES ((SELECT LibraryUser.UserCardNumber FROM LibraryUser WHERE FirstName = 'Gregory'), (SELECT Books.ID FROM Books WHERE ID = 2));
 
 SELECT LibraryUser.FirstName AS 'User', Books.Title as 'Book',
        (SELECT COUNT(*)

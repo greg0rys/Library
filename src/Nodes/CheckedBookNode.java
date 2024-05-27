@@ -1,37 +1,35 @@
 package Nodes;
 
-import LibraryObjects.Book;
-import UserObjects.LibraryMember;
 
 public class CheckedBookNode
 {
-    private LibraryMember checkedBy;
-    private Book titleChecked;
+    private int checkedBy;
+    private int titleChecked;
 
     public CheckedBookNode() { }
 
-    public CheckedBookNode(LibraryMember checkedBy, Book titleChecked)
+    public CheckedBookNode(int userNum, int bookNum)
     {
-        this.checkedBy = checkedBy;
-        this.titleChecked = titleChecked;
+        checkedBy = userNum;
+        titleChecked = bookNum;
     }
 
-    public LibraryMember getCheckedBy()
+    public int getCheckedBy()
     {
         return checkedBy;
     }
 
-    public Book getTitleChecked()
+    public int getTitleChecked()
     {
         return titleChecked;
     }
 
-    public void setCheckedBy(LibraryMember checkedBy)
+    public void setCheckedBy(int checkedBy)
     {
         this.checkedBy = checkedBy;
     }
 
-    public void setTitleChecked(Book titleChecked)
+    public void setTitleChecked(int titleChecked)
     {
         this.titleChecked = titleChecked;
     }

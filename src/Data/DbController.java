@@ -4,7 +4,7 @@ package Data;
 import LibraryObjects.Book;
 import Nodes.CheckedBookNode;
 import Nodes.Node;
-import UserObjects.LibraryMember;
+import LibraryObjects.LibraryMember;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -23,9 +23,10 @@ public class DbController
     private final CheckedBooksManager checkedBooksManager = new CheckedBooksManager();
     private final UserTableManager userTableManager = new UserTableManager();
 
-    public DbController() { }
+    public DbController() throws SQLException
+    { }
     
-    public DbController(Node N)
+    public DbController(Node N) throws SQLException
     {
         initNode(N, false);
     }
@@ -46,7 +47,7 @@ public class DbController
     {
         List<Book> bookTableManagers = bookTableManager.getAllBooks();
         List<LibraryMember> members = userTableManager.getMemberList();
-        List<CheckedBookNode> checkedBooksManagers = CheckedBooksManager.getAllCheckedOutBooks();
+        List<CheckedBookNode> checkedBooksManagers = checkedBooksManager.getAllCheckedOutBooks();
 
         if(!refresh)
         {

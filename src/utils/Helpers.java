@@ -36,20 +36,6 @@ public class Helpers
 
     static public int getCardNum() { return RANDOM.nextInt(MAX_CARD_NUM); }
 
-    static public boolean pingDB(String URL)
-    {
-        try(Connection con = DriverManager.getConnection(URL))
-        {
-            if(con != null)
-                return false;
-        }
-        catch(SQLException e)
-        {
-            out.println(e.getErrorCode());
-        }
-
-        return true;
-    }
 
     static public Book collectNewBookData()
     {
@@ -80,5 +66,4 @@ public class Helpers
         }
     }
 
-    static public boolean checkLists()
 }

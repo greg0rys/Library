@@ -7,6 +7,7 @@ import Nodes.CheckedBookNode;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static java.lang.System.out;
 
@@ -23,6 +24,7 @@ public class CheckedBooksManager extends DbController
         super();
         if(!pingDB())
             out.println("Unable to ping db - try again.");
+
     }
 
     public List<CheckedBookNode> getAllCheckedOutBooks()
@@ -33,10 +35,9 @@ public class CheckedBooksManager extends DbController
             ResultSet rs = state.executeQuery(GET_ALL_CHECKED_BOOKS);
 
             while(rs.next())
-         gi   {
-                CHECKED_OUT_BOOKS.add(new Book(rs.getString("title"), rs.getString("author"), rs.getString("genre"),
-                                   rs.getBoolean("in_series"), rs.getDouble("price"),
-                                   LoanStatus.valueOf(rs.getString("loan_status"))));
+            {
+                CHECKED_OUT_BOOKS.add(new CheckedBookNode(rs.getInt("UserCardNumber"),
+                                                          rs.getInt("BookNumber")));
             }
 
             return CHECKED_OUT_BOOKS;

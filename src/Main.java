@@ -12,7 +12,7 @@ public class Main
     public static void main(String[] args) throws SQLException
     {
 
-        Driver.start();
+        new Driver().start();
 
         out.println("Thanks for visiting the Library - Come back soon.");
         exit(0);

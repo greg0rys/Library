@@ -1,7 +1,6 @@
-package UserObjects;
+package LibraryObjects;
 
 import Data.CheckedBooksManager;
-import LibraryObjects.Book;
 import utils.Helpers;
 
 import java.sql.SQLException;

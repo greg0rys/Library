@@ -60,7 +60,7 @@ public class Driver
                 LIBRARY_SYSTEM.listAllBooks();
                 break;
             case 4:
-                new UserManager().start(LIBRARY_MEMBERS, true);
+                new UserManager().start();
                 break;
             case 16:
                 out.println("Not a valid choice, try again");

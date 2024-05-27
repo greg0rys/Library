@@ -71,21 +71,12 @@ public class LibraryMember
         return checkedOutBooks.size();
     }
 
-    public boolean checkOutBook(Book B) throws SQLException, ClassNotFoundException
-    {
-        if(B == null)
-            return false;
 
-        return CheckedBooksManager.addCheckedOutBook(cardNumber);
-    }
 
-    public boolean returnBook(Book B)
-    {
-        if(B == null)
-            return false;
 
-        return CheckedBooksManager.returnBookToLibrary(B.getBook_id(), cardNumber);
-    }
+
+
+
 
     public boolean updateCheckedOutList(Book B)
     {

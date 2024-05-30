@@ -4,18 +4,19 @@ import Data.UserTableManager;
 import LibraryObjects.LibraryMember;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static java.lang.System.out;
 
 public class UserManager
 {
-    private List<LibraryMember> memberList; // the list of users in the database
+    private Set<LibraryMember> memberList; // the list of users in the database
     private final Scanner scanner = new Scanner(System.in); // user input scanner
     private final UserTableManager userTableManager; // Database table manager for users.
     private final LibraryMember MEMBER = new LibraryMember(); // Generic member used to pass data.
+    // list containing valid menu options
+    private final List<Integer> validMenuChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+
 
     /**
      * Default constructor - when the userTableManager is init this will query the DB, and then we will copy the
@@ -26,7 +27,7 @@ public class UserManager
     {
         userTableManager = new UserTableManager();
 
-        memberList = new ArrayList<>(userTableManager.getMemberList());
+        memberList = new HashSet<>(userTableManager.getMemberList());
     }
 
 
@@ -64,6 +65,8 @@ public class UserManager
      */
     private int menu()
     {
+        int choice;
+
         out.println("1. Display All Members");
         out.println("2. Add Member");
         out.println("3. Delete Member");
@@ -72,7 +75,14 @@ public class UserManager
 
         out.println("Enter your choice: ");
 
-        return scanner.nextInt();
+        choice = scanner.nextInt();
+        if(!validMenuChoices.contains(choice))
+        {
+            out.println("Invalid choice, lets try again.");
+            return menu();
+        }
+
+        return choice;
 
     }
 
@@ -99,15 +109,14 @@ public class UserManager
 
     /**
      * Find a given member by their library card number
-     * @param cardNo the card number for the user
      * @return the member matching the search query.
      */
-    public LibraryMember findMemberByCard(int cardNo)
+    public LibraryMember findMemberByID()
     {
-
+        int userID = displayAllMembersByID();
         for (LibraryMember member : memberList)
 
-            if (member.getCardNumber() == cardNo)
+            if (member.getCardNumber() == userID)
                 return member;
 
 
@@ -122,6 +131,47 @@ public class UserManager
         for(LibraryMember member : memberList)
             member.display();
 
+    }
+
+    /**
+     * Display a list of all members and their ID's used to select the member to be found.
+     * @return the ID number of a user in the list.
+     */
+    private int displayAllMembersByID()
+    {
+        int choice = 0;
+
+        for(LibraryMember member : memberList)
+            out.println("ID: " + member.getCardNumber() + " " + member.getFirstName() + " " + member.getLastName());
+        out.println("Please Enter An ID Number: ");
+
+        choice = scanner.nextInt();
+
+        if(!getAllMemberIDs().contains(choice))
+        {
+            out.println("Invalid ID Number - redisplay");
+            return displayAllMembersByID();
+
+        }
+
+        return choice;
+    }
+
+
+    /**
+     * Get a list of all the member ID's in the current list.
+     * This is to help ensure users supply a valid input
+     * @return
+     */
+    private List<Integer> getAllMemberIDs()
+    {
+        List<Integer> memberIDs = new ArrayList<>();
+
+        for (LibraryMember member : memberList)
+        {
+            memberIDs.add(member.getCardNumber());
+        }
+        return memberIDs;
     }
 
 

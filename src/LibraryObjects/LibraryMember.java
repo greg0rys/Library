@@ -22,12 +22,13 @@ public class LibraryMember
         this.cardNumber = Helpers.getCardNum();
     }
 
-    public LibraryMember(String firstName, String lastName, int cardNum, int numBooksOnLoan)
+    public LibraryMember(String firstName, String lastName, int userID, int numBooksOnLoan, int cardNumber)
     {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.cardNumber = cardNum;
+        this.cardNumber = userID;
         this.booksOnLoan = numBooksOnLoan;
+        this.cardNumber = cardNumber;
 
     }
 

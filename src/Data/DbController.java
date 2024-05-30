@@ -9,14 +9,13 @@ import LibraryObjects.LibraryMember;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class DbController
 {
     private final String DB_URL ="jdbc:sqlite:newDB.db";
-    private final String SELECT_ALL_BOOKS = "SELECT * FROM Books";
-    private final String SELECT_ALL_MEMBERS = "SELECT * FROM LibraryUser";
-    private final String SELECT_ALL_CHECKED_BOOKS = "SELECT * FROM CheckedOutBooks";
     private final Node LAST_DB_STATE = new Node();
 
     private final BookTableManager bookTableManager = new BookTableManager();
@@ -31,6 +30,11 @@ public class DbController
         initNode(N, false);
     }
 
+    public List<Book> getAllBooks()
+    {
+        return new ArrayList<>();
+    }
+
 
     protected Connection getConnection() throws SQLException
     {
@@ -43,9 +47,14 @@ public class DbController
     }
 
 
+    /**
+     * initialize the node to hold all the data on first run.
+     * @param T the node that will hold the data.
+     * @param refresh true if you want to simply refresh the data, false if else.
+     */
     protected void initNode(Node T, boolean refresh)
     {
-        List<Book> bookTableManagers = bookTableManager.getAllBooks();
+        Set<Book> bookTableManagers = bookTableManager.getAllBooks();
         List<LibraryMember> members = userTableManager.getMemberList();
         List<CheckedBookNode> checkedBooksManagers = checkedBooksManager.getAllCheckedOutBooks();
 
@@ -76,8 +85,13 @@ public class DbController
 
     }
 
+    /**
+     * Commit changes to the last known state of the database.
+     * @param lastDbState the last known database state.
+     */
     private void commitChanges(Node lastDbState)
     {
+        //
     }
 
     public boolean refresh(Node N)
@@ -93,7 +107,16 @@ public class DbController
         return false;
     }
 
+    public boolean addBookToLibrary(Book newBook)
+    {
+       return bookTableManager.addBook(newBook);
+    }
 
+
+    public int getNumBooks()
+    {
+        return bookTableManager.getAllBooks().size();
+    }
 
     
 

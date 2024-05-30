@@ -1,7 +1,13 @@
 package LibraryObjects;
 
+import java.sql.SQLException;
 import java.util.*;
+
+import Data.BookTableManager;
+import Data.CheckedBooksManager;
 import Data.DbController;
+import Data.ShelfTableManager;
+import ManagerClasses.UserManager;
 import utils.Helpers;
 import static java.lang.System.out;
 
@@ -10,9 +16,15 @@ public class Library
 
     private HashMap<Integer, BookShelf> shelfMap = null;
     private boolean hasBooks = false;
-    private static DbController db;
+    private final DbController db = new DbController();
+    private final UserManager userManager = new UserManager();
+    private final BookTableManager bookTableManager = new BookTableManager();
+    private final CheckedBooksManager checkedBooksManager = new CheckedBooksManager();
+    private final ShelfTableManager shelfTableManager = new ShelfTableManager();
 
-    public Library() { /* default constructor */ }
+
+    public Library() throws SQLException
+    { /* default constructor */ }
 
     public boolean hasBooks()
     {
@@ -37,7 +49,7 @@ public class Library
     {
         Book newBook = Helpers.collectNewBookData();
         // now do something to the shelf. This feels relational.... EG Shelf > LibraryObjects.Book || LibraryObjects.Book > Shelf
-        DbController.addBookToLibrary(Helpers.collectNewBookData());
+        bookTableManager.addBookToLibrary(Helpers.collectNewBookData());
 
 
     }

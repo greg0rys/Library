@@ -15,30 +15,34 @@ public class UserTableManager extends DbController
 {
     private final static String GET_ALL_USERS = "SELECT * FROM LibraryUser";
     private final static String ADD_NEW_USER = "INSERT INTO LibraryUser VALUES(?,?,?,?)";
-    private final static String DELETE_USER = "DELETE FROM LibraryUser WHERE UserCardNumber = ?";
+    private final static String DELETE_USER = "DELETE FROM LibraryUser WHERE ID = ?";
     private final static List<LibraryMember> MEMBERS = new ArrayList<>();
+    private static PreparedStatement preparedStatement;
+    private static ResultSet resultSet;
 
     public UserTableManager() throws SQLException
     {
        super();
-       getAllMembers(MEMBERS);
+       getAllMembers();
 
     }
 
 
-    private void getAllMembers(List<LibraryMember> members)
+    private void getAllMembers()
     {
 
         try(Connection conn = getConnection())
         {
-            PreparedStatement ps = conn.prepareStatement(GET_ALL_USERS);
-            ResultSet rs = ps.executeQuery();
+            preparedStatement = conn.prepareStatement(GET_ALL_USERS);
+            resultSet = preparedStatement.executeQuery();
 
-            while(rs.next())
+            while(resultSet.next())
             {
-                members.add(new LibraryMember(
-                        rs.getString("FirstName"), rs.getString("LastName"), rs.getInt("UserCardNumber"),
-                        rs.getInt("NumBooksOnLoan")
+                MEMBERS.add(new LibraryMember(
+                        resultSet.getString("FirstName"), resultSet.getString("LastName"),
+                        resultSet.getInt("ID"),
+                        resultSet.getInt("NumBooksOnLoan"),
+                        resultSet.getInt("CardNumber")
                 ));
             }
         }
@@ -60,12 +64,12 @@ public class UserTableManager extends DbController
         {
             try (Connection conn = getConnection())
             {
-                PreparedStatement ps = conn.prepareStatement(ADD_NEW_USER);
-                ps.setString(1, member.getFirstName());
-                ps.setString(2, member.getLastName());
-                ps.setInt(3, member.getCardNumber());
-                ps.setInt(4, member.getTotalBooksOnLoan());
-                ps.executeUpdate();
+                preparedStatement = conn.prepareStatement(ADD_NEW_USER);
+                preparedStatement.setString(1, member.getFirstName());
+                preparedStatement.setString(2, member.getLastName());
+                preparedStatement.setInt(3, member.getCardNumber());
+                preparedStatement.setInt(4, member.getTotalBooksOnLoan());
+                preparedStatement.executeUpdate();
                return MEMBERS.add(member);
             } catch (RuntimeException | SQLException e)
             {

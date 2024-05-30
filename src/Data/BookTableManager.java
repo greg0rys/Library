@@ -3,11 +3,10 @@ package Data;
 import Constants.LoanStatus;
 import LibraryObjects.Book;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 
 import static java.lang.System.out;
@@ -15,12 +14,13 @@ import static java.lang.System.out;
 public class BookTableManager extends DbController
 {
     private final String SELECT_ALL = "SELECT * FROM Books";
-    private static final ArrayList<Book> allBooks = new ArrayList<>();
+    private static final Set<Book> allBooks = new HashSet<>();
     private final String BOOK_INSERT = "INSERT INTO Books(Title, Author, Genre, aSeries, Price) VALUES(?,?,?,?,?)";
 
 
-    public BookTableManager() { super(); }
-    public ArrayList<LibraryObjects.Book> getAllBooks()
+    public BookTableManager() throws SQLException
+    { super(); }
+    public Set<Book> getAllBooks()
     {
         int bookCount;
         boolean singleBook;

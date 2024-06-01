@@ -16,15 +16,12 @@ public class LibraryMember
     private int cardNumber;
     private String firstName;
     private String lastName;
-    private int bloan;
-    private ArrayList<Book> checkedOutBooks;
     private List<CheckedBook> booksOnLoan;
     private final Scanner scanner = new Scanner(System.in);
     private final UserTableManager U_MANAGER = new UserTableManager();
 
     /**
      * Create a generic member that will need to have first and last name set
-     *
      */
     public LibraryMember() throws SQLException
     {
@@ -46,8 +43,8 @@ public class LibraryMember
 
     /**
      * Create a member with all fields but no checked books
-     * @param fName first name
-     * @param lName last name
+     * @param fName     first name
+     * @param lName     last name
      * @param memberNum card number
      */
     public LibraryMember(String fName, String lName, int memberNum) throws SQLException
@@ -56,8 +53,6 @@ public class LibraryMember
         lastName = lName;
         cardNumber = memberNum;
     }
-
-
 
 
     /* GETTERS */
@@ -71,7 +66,8 @@ public class LibraryMember
         return lastName;
     }
 
-    public String getFullName() {
+    public String getFullName()
+    {
         return firstName + " " + lastName;
     }
 
@@ -82,7 +78,7 @@ public class LibraryMember
 
     public int getTotalBooksOnLoan()
     {
-        if(booksOnLoan.isEmpty())
+        if (booksOnLoan.isEmpty())
             return 0;
 
         return booksOnLoan.size();
@@ -91,12 +87,12 @@ public class LibraryMember
     /* SETTERS */
     public void setFirstName(String fName)
     {
-       firstName = fName;
+        firstName = fName;
     }
 
     public void setLastName(String lName)
     {
-       lastName = lName;
+        lastName = lName;
     }
 
 
@@ -111,11 +107,12 @@ public class LibraryMember
 
     /**
      * Get the List containing all the books the user has on loan.
+     *
      * @return all books user has on loan
      */
     public List<CheckedBook> getBooksOnLoan()
     {
-        if(booksOnLoan.isEmpty())
+        if (booksOnLoan.isEmpty())
             return null;
 
         return booksOnLoan;
@@ -123,22 +120,25 @@ public class LibraryMember
 
     /**
      * Add a new book to the users checked out list.
+     *
      * @param B
      * @return true if added, false if not.
      * TODO: Make sure you can't have duplicate books.
      */
     public boolean updateCheckedOutList(Book B)
     {
-        if(booksOnLoan.isEmpty())
+        if (booksOnLoan.isEmpty())
             return false;
         return booksOnLoan.add((CheckedBook) B);
     }
 
     /**
      * Collect First and Last name about a new user and add them to the data base.
+     *
      * @return true if added, false if not
-     * @throws SQLException
+     * @throws SQLException to handle any exceptions from the user table manager.
      */
+    @SuppressWarnings("UnusedReturnValue")
     public boolean collectInfo() throws SQLException
     {
         LibraryMember temp = new LibraryMember();
@@ -154,11 +154,12 @@ public class LibraryMember
 
     /**
      * Query all books checked out by the user.
+     *
      * @return true if loaded false if else.
      */
     private boolean loadCheckedList()
     {
-        if(booksOnLoan == null)
+        if (booksOnLoan == null)
             booksOnLoan = new ArrayList<>();
 
         return U_MANAGER.loadChecked(booksOnLoan);

@@ -34,13 +34,11 @@ public class UserManager
     /**
      * Used to manage the user management operations based on the users menu choice.
      */
-    public void start()
+    public void start() throws SQLException
     {
-        int choice;
         do
         {
-            choice = menu();
-            switch(choice)
+            switch(menu())
             {
                 case 0:
                     break;
@@ -50,13 +48,31 @@ public class UserManager
                 case 2:
                     addMember();
                     break;
+                case 3:
+                    deleteMember(findMemberBy());
+                    break;
+                case 4:
+                    updateMember(findMemberBy());
+                    break;
+                case 5:
+                    getUsersCheckedBooks(findMemberBy());
+                    break;
                 default:
                     out.println("No valid menu choice, lets try again.");
 
             }
 
-        } while(choice != 0);
+        } while(menu() != 0);
     }
+
+    private void getUsersCheckedBooks(LibraryMember temp) {}
+
+    private void updateMember(LibraryMember temp)
+    {
+
+    }
+
+    private void deleteMember(LibraryMember temp) {}
 
 
     /**
@@ -83,6 +99,19 @@ public class UserManager
         }
 
         return choice;
+
+    }
+
+    private LibraryMember findMemberBy()
+    {
+        int searchChoice = 0;
+        out.println("1 to search by name, 2 to search by card number: ");
+        searchChoice = scanner.nextInt();
+
+        if(!validMenuChoices.contains(searchChoice))
+            return null;
+
+        return searchChoice == 1 ? findUserByName() : findMemberByID();
 
     }
 
@@ -120,6 +149,11 @@ public class UserManager
                 return member;
 
 
+        return null;
+    }
+
+    private LibraryMember findUserByName()
+    {
         return null;
     }
 

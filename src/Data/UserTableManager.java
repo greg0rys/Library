@@ -40,8 +40,6 @@ public class UserTableManager extends DbController
             {
                 MEMBERS.add(new LibraryMember(
                         resultSet.getString("FirstName"), resultSet.getString("LastName"),
-                        resultSet.getInt("ID"),
-                        resultSet.getInt("NumBooksOnLoan"),
                         resultSet.getInt("CardNumber")
                 ));
             }

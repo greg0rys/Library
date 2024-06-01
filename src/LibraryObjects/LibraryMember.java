@@ -1,10 +1,11 @@
 package LibraryObjects;
 
-import Data.CheckedBooksManager;
 import utils.Helpers;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
+import static java.lang.System.out;
 
 public class LibraryMember
 {
@@ -12,23 +13,76 @@ public class LibraryMember
     private int cardNumber;
     private String firstName;
     private String lastName;
-    private int booksOnLoan;
+    private int bloan;
     private ArrayList<Book> checkedOutBooks;
+    private List<CheckedBook> booksOnLoan;
 
+    /**
+     * Create a generic member that will need to have first and last name set
+     *
+     */
     public LibraryMember()
     {
-        this.firstName = "";
-        this.lastName = "";
-        this.cardNumber = Helpers.getCardNum();
+        firstName = "dummy";
+        lastName = "user";
+        cardNumber = Helpers.getCardNum();
     }
+
+
+    /**
+     * Create a new user with no checked books and a new card number.
+     */
+    public LibraryMember(String fName, String lName)
+    {
+        firstName = fName;
+        lastName = lName;
+        cardNumber = Helpers.getCardNum();
+    }
+
+    /**
+     * Create a member with all fields but no checked books
+     * @param fName first name
+     * @param lName last name
+     * @param memberNum card number
+     */
+    public LibraryMember(String fName, String lName, int memberNum)
+    {
+        firstName = fName;
+        lastName = lName;
+        cardNumber = memberNum;
+    }
+
+    /**
+     * Construct used to load member from DB to include a List of all checked out books
+     * @param fName Member First Name
+     * @param lName Member Last Name
+     * @param memberID Member ID
+     * @param checkedBooks List Structure storing all checked books
+     */
+    public LibraryMember(String fName, String lName, int memberID, List<CheckedBook> checkedBooks)
+    {
+        firstName = fName;
+
+        lastName = lName;
+
+        cardNumber = memberID;
+
+        checkedOutBooks = new ArrayList<>(checkedBooks);
+    }
+
 
     public LibraryMember(String firstName, String lastName, int userID, int numBooksOnLoan, int cardNumber)
     {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.cardNumber = userID;
-        this.booksOnLoan = numBooksOnLoan;
-        this.cardNumber = cardNumber;
+
+        firstName = firstName;
+
+        lastName = lastName;
+
+        cardNumber = userID;
+
+        bloan = numBooksOnLoan;
+
+        cardNumber = cardNumber;
 
     }
 
@@ -48,14 +102,19 @@ public class LibraryMember
         return firstName + " " + lastName;
     }
 
+    public String getFullUserInfo()
+    {
+        return firstName + " " + lastName + "\nMember ID: " + cardNumber + "\nTotal Loaned: " + booksOnLoan.size();
+    }
+
     public void setFirstName(String fName)
     {
-        this.firstName = fName;
+       firstName = fName;
     }
 
     public void setLastName(String lName)
     {
-        this.lastName = lName;
+       lastName = lName;
     }
 
     public int getCardNumber()
@@ -66,24 +125,18 @@ public class LibraryMember
 
     public int getTotalBooksOnLoan()
     {
-        if(checkedOutBooks.isEmpty())
+        if(booksOnLoan.isEmpty())
             return 0;
 
-        return checkedOutBooks.size();
+        return booksOnLoan.size();
     }
-
-
-
-
-
-
 
 
     public boolean updateCheckedOutList(Book B)
     {
-        if(checkedOutBooks.isEmpty())
+        if(booksOnLoan.isEmpty())
             return false;
-        return checkedOutBooks.add(B);
+        return booksOnLoan.add((CheckedBook) B);
     }
 
     public LibraryMember collectInfo()
@@ -93,5 +146,6 @@ public class LibraryMember
 
     public void display()
     {
+        out.println(getFullUserInfo());
     }
 }

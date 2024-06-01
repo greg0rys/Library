@@ -110,7 +110,7 @@ public class Book
         return collect(newBook);
     }
 
-    private boolean collect(Book newBook)
+    protected boolean collect(Book newBook)
     {
         String title = "";
         String author = "";
@@ -137,7 +137,7 @@ public class Book
 
     }
 
-    private void setAll(String title, String author, String genre, boolean isSeries, double price)
+    protected void setAll(String title, String author, String genre, boolean isSeries, double price)
     {
         this.title = title;
         this.author = author;
@@ -147,7 +147,7 @@ public class Book
     }
 
 
-    private void setAllEmpty()
+    protected void setAllEmpty()
     {
         title = " ";
         author = " ";

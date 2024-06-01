@@ -93,7 +93,7 @@ public class UserManager
      * is already in the system.
      * @return true if we added a new user - false if the user is already in the system.
      */
-    public boolean addMember()
+    public boolean addMember() throws SQLException
     {
         MEMBER.collectInfo();
 

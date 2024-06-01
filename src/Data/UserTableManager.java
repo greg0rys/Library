@@ -1,5 +1,6 @@
 package Data;
 
+import LibraryObjects.CheckedBook;
 import LibraryObjects.LibraryMember;
 
 import java.sql.Connection;
@@ -85,6 +86,8 @@ public class UserTableManager extends DbController
     }
 
 
-
-
+    public boolean loadChecked(List<CheckedBook> booksOnLoan)
+    {
+        return true;
+    }
 }

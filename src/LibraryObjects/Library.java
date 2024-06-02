@@ -3,10 +3,6 @@ package LibraryObjects;
 import java.sql.SQLException;
 import java.util.*;
 
-import Data.BookTableManager;
-import Data.CheckedBooksManager;
-import Data.DbController;
-import Data.ShelfTableManager;
 import ManagerClasses.BookManager;
 import ManagerClasses.ShelfManager;
 import ManagerClasses.UserManager;
@@ -40,6 +36,7 @@ public class Library
      */
     public void addBookShelf(BookShelf bookShelf)
     {
+        shelfManager.createShelf();
         if (shelfMap == null)
             shelfMap = new HashMap<>();
 

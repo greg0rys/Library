@@ -54,7 +54,7 @@ public class DbController
      */
     protected void initNode(Node T, boolean refresh)
     {
-        Set<Book> bookTableManagers = bookTableManager.getAllBooks();
+        List<Book> bookTableManagers = bookTableManager.getAllBooks();
         List<LibraryMember> members = userTableManager.getMemberList();
         List<CheckedBookNode> checkedBooksManagers = checkedBooksManager.getAllCheckedOutBooks();
 

@@ -7,6 +7,8 @@ import Data.BookTableManager;
 import Data.CheckedBooksManager;
 import Data.DbController;
 import Data.ShelfTableManager;
+import ManagerClasses.BookManager;
+import ManagerClasses.ShelfManager;
 import ManagerClasses.UserManager;
 import utils.Helpers;
 import static java.lang.System.out;
@@ -15,12 +17,11 @@ public class Library
 {
 
     private HashMap<Integer, BookShelf> shelfMap = null;
-    private boolean hasBooks = false;
-    private final DbController db = new DbController();
     private final UserManager userManager = new UserManager();
-    private final BookTableManager bookTableManager = new BookTableManager();
-    private final CheckedBooksManager checkedBooksManager = new CheckedBooksManager();
-    private final ShelfTableManager shelfTableManager = new ShelfTableManager();
+    private final BookManager bookManager = new BookManager();
+    private final ShelfManager shelfManager = new ShelfManager();
+    private final Scanner scanner = new Scanner(System.in);
+
 
 
     public Library() throws SQLException
@@ -28,7 +29,7 @@ public class Library
 
     public boolean hasBooks()
     {
-        return (!shelfMap.isEmpty());
+        return (!bookManager.empty());
     }
 
 
@@ -47,10 +48,28 @@ public class Library
 
     public void addBook()
     {
+
         Book newBook = Helpers.collectNewBookData();
         // now do something to the shelf. This feels relational.... EG Shelf > LibraryObjects.Book || LibraryObjects.Book > Shelf
-        bookTableManager.addBookToLibrary(Helpers.collectNewBookData());
 
+
+    }
+
+    public boolean createNewBook()
+    {
+        Book t = new Book();
+        out.println("Please enter the books title: ");
+        t.setTitle(scanner.next());
+        out.println("Please enter the books author: ");
+        t.setAuthor(scanner.next());
+        out.println("Please enter the books genre: ");
+        t.setGenre(scanner.next());
+        out.println("Is this book a series? Enter true / false: ");
+        t.setSeries(scanner.nextBoolean());
+        out.println("Please enter the books cost: ");
+        t.setPrice(scanner.nextDouble());
+
+        return t.isComplete();
 
     }
 
@@ -113,18 +132,7 @@ public class Library
      */
     public void listAllBooks()
     {
-
-        for(Book books : DbController.getAllBooks())
-        {
-            out.println();
-            books.display();
-            out.println("**************");
-            out.println();
-        }
-        printTotalBooks();
-
-
-
+        bookManager.display();
     }
 
     /**
@@ -133,7 +141,7 @@ public class Library
      */
     public void printTotalBooks()
     {
-        int totalBooks = DbController.getNumBooks();
+        int totalBooks = bookManager.getTotalBooks();
         String isA = "is " + totalBooks + " book in the library";
         String areA = " are a total of " + totalBooks + " books in the library.";
         out.println("There" + (totalBooks > 1 ? areA : isA));

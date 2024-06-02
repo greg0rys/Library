@@ -5,8 +5,7 @@ import LibraryObjects.Book;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 
 import static java.lang.System.out;
@@ -14,13 +13,13 @@ import static java.lang.System.out;
 public class BookTableManager extends DbController
 {
     private final String SELECT_ALL = "SELECT * FROM Books";
-    private static final Set<Book> allBooks = new HashSet<>();
+    private static final List<Book> allBooks = new ArrayList<>();
     private final String BOOK_INSERT = "INSERT INTO Books(Title, Author, Genre, aSeries, Price) VALUES(?,?,?,?,?)";
 
 
     public BookTableManager() throws SQLException
     { super(); }
-    public Set<Book> getAllBooks()
+    public List<Book> getAllBooks()
     {
         int bookCount;
         boolean singleBook;

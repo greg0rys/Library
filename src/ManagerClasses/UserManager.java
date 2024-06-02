@@ -36,9 +36,11 @@ public class UserManager
      */
     public void start() throws SQLException
     {
+        int choice;
         do
         {
-            switch(menu())
+            choice = menu();
+            switch(choice)
             {
                 case 0:
                     break;
@@ -62,13 +64,36 @@ public class UserManager
 
             }
 
-        } while(menu() != 0);
+        } while(choice != 0);
     }
 
-    private void getUsersCheckedBooks(LibraryMember temp) {}
+    /**
+     * Get all checked books for a given user.
+     * @param temp
+     */
+    private void getUsersCheckedBooks(LibraryMember temp)
+    {
+        userTableManager.getCheckedBooks(temp);
+    }
 
     private void updateMember(LibraryMember temp)
     {
+        int choice;
+        out.println("What would you like to update about this member? 1 for first name 2 for last name");
+        choice = scanner.nextInt();
+
+        if(choice == 1)
+        {
+            out.println("Please enter the members new first name: ");
+            temp.setFirstName(scanner.next());
+
+        }
+
+        if(choice == 2)
+        {
+            out.println("Please enter the members new last name: ");
+            temp.setLastName(scanner.next());
+        }
 
     }
 

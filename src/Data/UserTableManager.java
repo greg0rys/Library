@@ -19,7 +19,6 @@ public class UserTableManager extends DbController
     private final static String DELETE_USER = "DELETE FROM LibraryUser WHERE ID = ?";
     private final static List<LibraryMember> MEMBERS = new ArrayList<>();
     private static PreparedStatement preparedStatement;
-    private static ResultSet resultSet;
 
     public UserTableManager() throws SQLException
     {
@@ -32,23 +31,6 @@ public class UserTableManager extends DbController
     private void getAllMembers()
     {
 
-        try(Connection conn = getConnection())
-        {
-            preparedStatement = conn.prepareStatement(GET_ALL_USERS);
-            resultSet = preparedStatement.executeQuery();
-
-            while(resultSet.next())
-            {
-                MEMBERS.add(new LibraryMember(
-                        resultSet.getString("FirstName"), resultSet.getString("LastName"),
-                        resultSet.getInt("CardNumber")
-                ));
-            }
-        }
-        catch(RuntimeException | SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
     }
 
 
@@ -90,4 +72,6 @@ public class UserTableManager extends DbController
     {
         return true;
     }
+
+    public void getCheckedBooks(LibraryMember temp) {}
 }

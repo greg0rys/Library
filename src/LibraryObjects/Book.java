@@ -39,6 +39,7 @@ public class Book
         if(isSeries) booksInSeries = new ArrayList<>();
     }
 
+
     /**
      * No args constructor | all fields init to placeholders.
      */
@@ -171,4 +172,8 @@ public class Book
         loanStatus = LoanStatus.valueOf(status);
     }
 
+    public boolean isComplete()
+    {
+        return !title.isEmpty() && !author.isEmpty() && !genre.isEmpty() && price != 0;
+    }
 }

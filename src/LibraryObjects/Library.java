@@ -39,6 +39,10 @@ public class Library
         return shelfManager.addShelf(bookShelf);
     }
 
+    /**
+     * Add a common book to a shelf AFTER it gets added to the library if it's new.
+     * TODO: Implement boolean check.
+     */
     public void addBook()
     {
 

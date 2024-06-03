@@ -10,7 +10,7 @@ import static java.lang.System.out;
 
 public class UserManager
 {
-    private Set<LibraryMember> memberList; // the list of users in the database
+    private List<LibraryMember> memberList; // the list of users in the database
     private final Scanner scanner = new Scanner(System.in); // user input scanner
     private final UserTableManager userTableManager; // Database table manager for users.
     private final LibraryMember MEMBER = new LibraryMember(); // Generic member used to pass data.
@@ -27,7 +27,7 @@ public class UserManager
     {
         userTableManager = new UserTableManager();
 
-        memberList = new HashSet<>(userTableManager.getMemberList());
+        memberList = new ArrayList<>(userTableManager.getMemberList());
     }
 
 

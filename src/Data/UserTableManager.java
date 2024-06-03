@@ -23,17 +23,47 @@ public class UserTableManager extends DbController
     public UserTableManager() throws SQLException
     {
        super();
-       getAllMembers();
+       queryAllMembers();
 
     }
 
 
-    private void getAllMembers()
+    /**
+     * Query in memory DB collect all members. Stored linear.
+     * @return ArrayList of all members.
+     */
+    private List<LibraryMember> queryAllMembers()
     {
+        try(Connection conn = getConnection())
+        {
+            List<LibraryMember> members = new ArrayList<>();
+            PreparedStatement ps = conn.prepareStatement(GET_ALL_USERS);
+            ResultSet rs = ps.executeQuery();
 
+            while(rs.next())
+            {
+                members.add(
+                        new LibraryMember(rs.getString("FirstName"),
+                                              rs.getString("LastName"),
+                                              rs.getInt("UserCardNumber"))
+                );
+            }
+
+            return members;
+        }
+        catch(SQLException e)
+        {
+
+            out.println(e.getMessage());
+            return null;
+        }
     }
 
 
+    /**
+     *
+     * @return
+     */
     public List<LibraryMember> getMemberList()
     {
         return MEMBERS;

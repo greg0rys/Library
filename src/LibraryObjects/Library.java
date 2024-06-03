@@ -34,51 +34,29 @@ public class Library
      *
      * @param bookShelf the LibraryObjects.BookShelf that will be added to the library
      */
-    public void addBookShelf(BookShelf bookShelf)
+    public boolean addBookShelf(BookShelf bookShelf)
     {
-        shelfManager.createShelf();
-        if (shelfMap == null)
-            shelfMap = new HashMap<>();
-
-        shelfMap.put(bookShelf.getID(), bookShelf);
+        return shelfManager.addShelf(bookShelf);
     }
 
     public void addBook()
     {
 
-        Book newBook = Helpers.collectNewBookData();
         // now do something to the shelf. This feels relational.... EG Shelf > LibraryObjects.Book || LibraryObjects.Book > Shelf
+        shelfManager.insertBook(Helpers.collectNewBookData());
 
 
     }
 
-    public boolean createNewBook()
-    {
-        Book t = new Book();
-        out.println("Please enter the books title: ");
-        t.setTitle(scanner.next());
-        out.println("Please enter the books author: ");
-        t.setAuthor(scanner.next());
-        out.println("Please enter the books genre: ");
-        t.setGenre(scanner.next());
-        out.println("Is this book a series? Enter true / false: ");
-        t.setSeries(scanner.nextBoolean());
-        out.println("Please enter the books cost: ");
-        t.setPrice(scanner.nextDouble());
 
-        return t.isComplete();
+//    private BookShelf getOpenShelf()
+//    {
+//        for(BookShelf bookShelf : shelfMap.values())
+//        { if (bookShelf.hasCapacity()) return bookShelf; }
+//
+//        return null;
+//    }
 
-    }
-
-
-
-    private BookShelf getOpenShelf()
-    {
-        for(BookShelf bookShelf : shelfMap.values())
-        { if (bookShelf.hasCapacity()) return bookShelf; }
-
-        return null;
-    }
 
     public boolean findBook()
     {
@@ -115,12 +93,13 @@ public class Library
         }
 
         printTotalBooks();
-        printTotalShelves();
+        numShelves();
         out.println();
     }
 
-    private void printTotalShelves()
+    private void numShelves()
     {
+        out.println("Total Number of Books: " + shelfManager.shelfCount());
     }
 
     /**

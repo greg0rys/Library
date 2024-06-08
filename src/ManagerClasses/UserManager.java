@@ -21,7 +21,6 @@ public class UserManager
     /**
      * Default constructor - when the userTableManager is init this will query the DB, and then we will copy the
      * results in the array list.
-     * @throws SQLException
      */
     public UserManager() throws SQLException
     {
@@ -69,7 +68,7 @@ public class UserManager
 
     /**
      * Get all checked books for a given user.
-     * @param temp
+     * @param temp the user we wish to check.
      */
     private void getUsersCheckedBooks(LibraryMember temp)
     {

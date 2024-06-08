@@ -33,52 +33,20 @@ public class Driver
 
     public void start() throws SQLException
     {
-
+        int choice;
         do
         {
-            controller(menu());
+            choice = menu();
+            controller(choice);
         }
-        while(controller(menu()));
+        while(choice != 0);
+
     }
 
-
-
-
-
-    private  boolean controller(int selection) throws SQLException
-    {
-
-        switch (selection)
-        {
-
-            case 0:
-                return false;
-            case 1:
-                LIBRARY_SYSTEM.printTotalBooks();
-                break;
-            case 2:
-//                LIBRARY_SYSTEM.addBook();
-                out.println("Not yet implemented");
-                break;
-            case 3:
-                LIBRARY_SYSTEM.listAllBooks();
-                break;
-            case 4:
-                new UserManager().start();
-                break;
-            case 16:
-                out.println("Not a valid choice, try again");
-                break;
-            default:
-                out.println();
-                break;
-        }
-
-        return true;
-    }
-
-
-
+    /**
+     * Display menu choice to the user and collect their input
+     * @return the users menu choice in the form of an int
+     */
     private static int menu()
     {
         out.println("1. Display LibraryObjects.Book Count");
@@ -92,6 +60,43 @@ public class Driver
         out.print("Please enter your choice: ");
         return SCANNER.nextInt();
     }
+
+
+    /**
+     * Program controller to call the library systems methods.
+     * @param selection the users menu choice
+     * @throws SQLException if DB has an error
+     */
+    private  void controller(int selection) throws SQLException
+    {
+
+        switch (selection)
+        {
+
+            case 0:
+                break;
+            case 1:
+                LIBRARY_SYSTEM.printTotalBooks();
+                break;
+            case 2:
+//                LIBRARY_SYSTEM.addBook();
+                out.println("Not yet implemented");
+                break;
+            case 3:
+                LIBRARY_SYSTEM.listAllBooks();
+                break;
+            case 4:
+                new UserManager().start();
+                break;
+            default:
+                out.println("Not a valid menu choice, try again");
+                break;
+        }
+
+    }
+
+
+
 
 
 

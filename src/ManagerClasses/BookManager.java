@@ -27,6 +27,7 @@ public class BookManager
     {
         if(BOOK_LIST.isEmpty())
             return 0;
+
         return BOOK_LIST.size();
     }
 

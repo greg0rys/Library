@@ -97,7 +97,13 @@ public class UserManager
 
     }
 
-    private void deleteMember(LibraryMember temp) {}
+    private void deleteMember(LibraryMember temp)
+    {
+        if(!memberList.contains(temp))
+            return;
+
+        memberList.remove(temp);
+    }
 
 
     /**
@@ -129,14 +135,19 @@ public class UserManager
 
     private LibraryMember findMemberBy()
     {
-        int searchChoice = 0;
+        int searchChoice; // the users choice from the menu.
         out.println("1 to search by name, 2 to search by card number: ");
         searchChoice = scanner.nextInt();
 
-        if(!validMenuChoices.contains(searchChoice))
-            return null;
+        if (!validMenuChoices.contains(searchChoice))
+        {
+            out.println("That isn't a valid choice, lets try again.");
+            return findMemberBy();
+        }
 
-        return searchChoice == 1 ? findUserByName() : findMemberByID();
+
+
+        return (searchChoice == 1 ? findUserByName() : findMemberByID());
 
     }
 

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ShelfTableManager extends DbController
+public class ShelfTableManager
 {
     private final Set<BookShelf> bookShelfSet = new HashSet<>();
     private int shelfNum = 0;
@@ -15,7 +15,6 @@ public class ShelfTableManager extends DbController
 
     public ShelfTableManager() throws SQLException
     {
-        super();
 
     }
 

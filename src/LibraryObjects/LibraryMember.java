@@ -18,7 +18,6 @@ public class LibraryMember
     private String lastName;
     private List<CheckedBook> booksOnLoan;
     private final Scanner scanner = new Scanner(System.in);
-    private final UserTableManager U_MANAGER = new UserTableManager();
 
     /**
      * Create a generic member that will need to have first and last name set
@@ -148,7 +147,7 @@ public class LibraryMember
         temp.setLastName(scanner.nextLine());
         out.println("Assigned " + temp.getCardNumber() + " card number to " + temp.getFirstName());
 
-        return U_MANAGER.addMember(temp);
+        return false;
 
     }
 
@@ -162,7 +161,7 @@ public class LibraryMember
         if (booksOnLoan == null)
             booksOnLoan = new ArrayList<>();
 
-        return U_MANAGER.loadChecked(booksOnLoan);
+        return false;
     }
 
 }

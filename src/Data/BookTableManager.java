@@ -10,20 +10,26 @@ import java.util.List;
 
 import static java.lang.System.out;
 
-public class BookTableManager extends DbController
+public class BookTableManager
 {
+    private final String DB_URL ="jdbc:sqlite:newDB.db";
     private final String SELECT_ALL = "SELECT * FROM Books";
     private static final List<Book> allBooks = new ArrayList<>();
     private final String BOOK_INSERT = "INSERT INTO Books(Title, Author, Genre, aSeries, Price) VALUES(?,?,?,?,?)";
 
 
     public BookTableManager() throws SQLException
-    { super(); }
+    {}
+
+    private Connection getConnection() throws SQLException
+    {
+        return DriverManager.getConnection(DB_URL);
+    }
     public List<Book> getAllBooks()
     {
         int bookCount;
         boolean singleBook;
-        try (Connection conn = getConnection())
+        try (Connection conn = DriverManager.getConnection(DB_URL))
         {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(SELECT_ALL);

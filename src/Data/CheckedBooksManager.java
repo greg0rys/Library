@@ -11,8 +11,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static java.lang.System.out;
 
-public class CheckedBooksManager extends DbController
+public class CheckedBooksManager
 {
+    private final String DB_URL ="jdbc:sqlite:newDB.db";
     private final static String GET_ALL_BOOKS_FOR_USER = "SELECT * FROM CheckedOutBooks WHERE UserCardNum = ?";
     private final static String REMOVE_BOOK_FOR_USER = "DELETE FROM CheckedOutBooks WHERE UserCardNum = ?";
     private final static String ADD_BOOK_FOR_USER = "INSERT INTO CheckedOutBooks(BookID, UserCardNum) VALUES(?,?)";
@@ -21,15 +22,17 @@ public class CheckedBooksManager extends DbController
 
     public CheckedBooksManager() throws SQLException
     {
-        super();
-        if(!pingDB())
-            out.println("Unable to ping db - try again.");
 
+    }
+
+    private Connection getConnection() throws SQLException
+    {
+        return DriverManager.getConnection(DB_URL);
     }
 
     public List<CheckedBookNode> getAllCheckedOutBooks()
     {
-        try(Connection conn = getConnection())
+        try(Connection conn = DriverManager.getConnection(DB_URL))
         {
             Statement state = conn.prepareStatement(GET_ALL_CHECKED_BOOKS);
             ResultSet rs = state.executeQuery(GET_ALL_CHECKED_BOOKS);

@@ -3,17 +3,15 @@ package Data;
 import LibraryObjects.CheckedBook;
 import LibraryObjects.LibraryMember;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.System.out;
 
-public class UserTableManager extends DbController
+public class UserTableManager
 {
+    private final String DB_URL ="jdbc:sqlite:newDB.db";
     private final static String GET_ALL_USERS = "SELECT * FROM LibraryUser";
     private final static String ADD_NEW_USER = "INSERT INTO LibraryUser VALUES(?,?,?,?)";
     private final static String DELETE_USER = "DELETE FROM LibraryUser WHERE ID = ?";
@@ -22,7 +20,7 @@ public class UserTableManager extends DbController
 
     public UserTableManager() throws SQLException
     {
-       super();
+//       super();
        queryAllMembers();
 
     }
@@ -34,7 +32,7 @@ public class UserTableManager extends DbController
      */
     private List<LibraryMember> queryAllMembers()
     {
-        try(Connection conn = getConnection())
+        try(Connection conn = DriverManager.getConnection(DB_URL))
         {
             List<LibraryMember> members = new ArrayList<>();
             PreparedStatement ps = conn.prepareStatement(GET_ALL_USERS);
@@ -73,7 +71,7 @@ public class UserTableManager extends DbController
     {
         if(!MEMBERS.contains(member))
         {
-            try (Connection conn = getConnection())
+            try (Connection conn = DriverManager.getConnection(DB_URL))
             {
                 preparedStatement = conn.prepareStatement(ADD_NEW_USER);
                 preparedStatement.setString(1, member.getFirstName());

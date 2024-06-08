@@ -39,27 +39,21 @@ public class Library
         return shelfManager.addShelf(bookShelf);
     }
 
-    /**
-     * Add a common book to a shelf AFTER it gets added to the library if it's new.
-     * TODO: Implement boolean check.
-     */
-    public void addBook()
-    {
-
-        // now do something to the shelf. This feels relational.... EG Shelf > LibraryObjects.Book || LibraryObjects.Book > Shelf
-        shelfManager.insertBook(Helpers.collectNewBookData());
-
-
-    }
-
-
-//    private BookShelf getOpenShelf()
+//    /**
+//     * Add a common book to a shelf AFTER it gets added to the library if it's new.
+//     * TODO: Implement boolean check.
+//     */
+//    public void addBook()
 //    {
-//        for(BookShelf bookShelf : shelfMap.values())
-//        { if (bookShelf.hasCapacity()) return bookShelf; }
 //
-//        return null;
+//        // now do something to the shelf. This feels relational.... EG Shelf > LibraryObjects.Book || LibraryObjects.Book > Shelf
+//        shelfManager.insertBook(Helpers.collectNewBookData());
+//
+//
 //    }
+
+
+
 
 
     public boolean findBook()
@@ -89,22 +83,22 @@ public class Library
     /**
      * Display the total number of books & shelves in the library
      */
-    public void displayTotals()
-    {
-        if (shelfMap == null)
-        {
-            return;
-        }
+//    public void displayTotals()
+//    {
+//        if (shelfMap == null)
+//        {
+//            return;
+//        }
+//
+//        printTotalBooks();
+//        numShelves();
+//        out.println();
+//    }
 
-        printTotalBooks();
-        numShelves();
-        out.println();
-    }
-
-    private void numShelves()
-    {
-        out.println("Total Number of Books: " + shelfManager.shelfCount());
-    }
+//    private void numShelves()
+//    {
+//        out.println("Total Number of Books: " + shelfManager.shelfCount());
+//    }
 
     /**
      * List each book in the library

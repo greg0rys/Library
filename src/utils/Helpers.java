@@ -1,7 +1,9 @@
 package utils;
 
 import LibraryObjects.Book;
+import LibraryObjects.LibraryMember;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 import static java.lang.System.out;
@@ -17,6 +19,7 @@ public class Helpers
     private static final int MAX_SHELF_ID = 400567;
     private static final int MAX_CARD_NUM = (Integer.MAX_VALUE / 4);
     private static final Random RANDOM = new Random();
+    private static final Scanner SCANNER = new Scanner(System.in);
 
 
     public Helpers() {};
@@ -50,6 +53,19 @@ public class Helpers
         temp.setPrice(scanner.nextDouble());
 
         return temp;
+    }
+
+    static public LibraryMember collectNewMember()
+    {
+        LibraryMember member = new LibraryMember();
+        out.println("Members First Name: ");
+        member.setFirstName(SCANNER.nextLine());
+        out.println("Members Last Name: ");
+        member.setLastName(SCANNER.nextLine());
+
+        out.println(member.getFirstName() + " has been assigned card number: " + member.getCardNumber());
+
+        return member;
     }
 
     static public void printArrayList(List<Book> books)

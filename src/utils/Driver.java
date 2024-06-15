@@ -17,6 +17,7 @@ public class Driver
 {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static Library LIBRARY_SYSTEM;
+    private static UserManager um;
 
     public Driver()
     {
@@ -24,6 +25,7 @@ public class Driver
         try
         {
             LIBRARY_SYSTEM = new Library();
+            um = new UserManager();
         }
         catch (SQLException e)
         {
@@ -69,7 +71,7 @@ public class Driver
      */
     private  void controller(int selection) throws SQLException
     {
-        UserManager um = new UserManager();
+
 
         switch (selection)
         {

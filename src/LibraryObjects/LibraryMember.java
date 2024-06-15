@@ -16,16 +16,15 @@ public class LibraryMember
     private int cardNumber;
     private String firstName;
     private String lastName;
+    private int totalLoanedBooks;
     private List<CheckedBook> booksOnLoan;
     private final Scanner scanner = new Scanner(System.in);
 
     /**
      * Create a generic member that will need to have first and last name set
      */
-    public LibraryMember() throws SQLException
+    public LibraryMember()
     {
-        firstName = "dummy";
-        lastName = "user";
         cardNumber = Helpers.getCardNum();
     }
 
@@ -51,6 +50,16 @@ public class LibraryMember
         firstName = fName;
         lastName = lName;
         cardNumber = memberNum;
+
+    }
+
+    public LibraryMember(String fName, String lName, int memNumber, int totalLoans)
+    {
+        firstName = fName;
+        lastName  = lName;
+        cardNumber = memNumber;
+        totalLoanedBooks = totalLoans;
+
     }
 
 
@@ -101,7 +110,7 @@ public class LibraryMember
     public void display()
     {
         out.println(firstName + " " + lastName + "\nMember ID: " + cardNumber +
-                            "\nTotal Loaned: " + booksOnLoan.size());
+                            "\nTotal Loaned: " + totalLoanedBooks + "\n");
     }
 
     /**
@@ -138,7 +147,7 @@ public class LibraryMember
      * @throws SQLException to handle any exceptions from the user table manager.
      */
     @SuppressWarnings("UnusedReturnValue")
-    public boolean collectInfo() throws SQLException
+    public LibraryMember collectInfo() throws SQLException
     {
         LibraryMember temp = new LibraryMember();
         out.println("Member First Name: ");
@@ -147,7 +156,7 @@ public class LibraryMember
         temp.setLastName(scanner.nextLine());
         out.println("Assigned " + temp.getCardNumber() + " card number to " + temp.getFirstName());
 
-        return false;
+        return temp;
 
     }
 

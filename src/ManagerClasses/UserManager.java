@@ -52,7 +52,7 @@ public class UserManager
                     Helpers.addNewLine();
                     break;
                 case 3:
-                    deleteMember(findMemberBy());
+                    addMember();
                     Helpers.addNewLine();
                     break;
                 case 4:
@@ -66,8 +66,6 @@ public class UserManager
                 default:
                     out.println("No valid menu choice, lets try again.");
                     Helpers.addNewLine();
-
-
             }
 
         } while(choice != 0);
@@ -168,16 +166,22 @@ public class UserManager
      */
     public boolean addMember() throws SQLException
     {
-        MEMBER.collectInfo();
+        LibraryMember temp = Helpers.collectNewMember();
 
-        if(!memberList.contains(MEMBER))
+        if(!memberList.contains(temp))
         {
-            memberList.add(MEMBER);
-            return userTableManager.addMember(MEMBER);
+            memberList.add(temp);
+            return updateTManager(temp);
         }
 
-        out.println("Member already exists with card number " + MEMBER.getCardNumber());
+        out.println("Member already exists with card number " + temp.getCardNumber());
         return false;
+    }
+
+
+    private boolean updateTManager(LibraryMember member)
+    {
+        return userTableManager.addToLocalList(member);
     }
 
     /**
@@ -207,7 +211,7 @@ public class UserManager
     public void displayMembers()
     {
         for(LibraryMember member : memberList)
-            out.println("Name: " + member.getFirstName() + " " + member.getLastName());
+            member.display();
 
     }
 
@@ -251,6 +255,8 @@ public class UserManager
         }
         return memberIDs;
     }
+
+
 
 
 }

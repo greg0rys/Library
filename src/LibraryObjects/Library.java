@@ -13,7 +13,6 @@ public class Library
 {
 
     private HashMap<Integer, BookShelf> shelfMap = null;
-    private final UserManager userManager = new UserManager();
     private final BookManager bookManager = new BookManager();
     private final ShelfManager shelfManager = new ShelfManager();
     private final Scanner scanner = new Scanner(System.in);

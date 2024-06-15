@@ -2,6 +2,7 @@ package ManagerClasses;
 
 import Data.UserTableManager;
 import LibraryObjects.LibraryMember;
+import utils.Helpers;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -12,10 +13,10 @@ public class UserManager
 {
     private List<LibraryMember> memberList; // the list of users in the database
     private final Scanner scanner = new Scanner(System.in); // user input scanner
-    private final UserTableManager userTableManager; // Database table manager for users.
+    private final UserTableManager userTableManager = new UserTableManager(); // Database table manager for users.
     private final LibraryMember MEMBER = new LibraryMember(); // Generic member used to pass data.
     // list containing valid menu options
-    private final List<Integer> validMenuChoices = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+    private final List<Integer> validMenuChoices = new ArrayList<>(Arrays.asList(0,1, 2, 3, 4, 5));
 
 
     /**
@@ -24,9 +25,7 @@ public class UserManager
      */
     public UserManager() throws SQLException
     {
-        userTableManager = new UserTableManager();
-
-        memberList = new ArrayList<>(userTableManager.getMemberList());
+        memberList = new ArrayList<>(userTableManager.queryAllMembers());
     }
 
 
@@ -36,6 +35,7 @@ public class UserManager
     public void start() throws SQLException
     {
         int choice;
+
         do
         {
             choice = menu();
@@ -45,21 +45,28 @@ public class UserManager
                     break;
                 case 1:
                     displayMembers();
+                    Helpers.addNewLine();
                     break;
                 case 2:
-                    addMember();
+                    out.println("Total Number Of Members: " + memberList.size());
+                    Helpers.addNewLine();
                     break;
                 case 3:
                     deleteMember(findMemberBy());
+                    Helpers.addNewLine();
                     break;
                 case 4:
                     updateMember(findMemberBy());
+                    Helpers.addNewLine();
                     break;
                 case 5:
                     getUsersCheckedBooks(findMemberBy());
+                    Helpers.addNewLine();
                     break;
                 default:
                     out.println("No valid menu choice, lets try again.");
+                    Helpers.addNewLine();
+
 
             }
 
@@ -113,11 +120,13 @@ public class UserManager
     {
         int choice;
 
+        out.println("0. Return To Previous Menu");
         out.println("1. Display All Members");
-        out.println("2. Add Member");
-        out.println("3. Delete Member");
-        out.println("4. Update Member");
-        out.println("5. Books Loaned to Member");
+        out.println("2. Get Total Members");
+        out.println("3. Add Member");
+        out.println("4. Delete Member");
+        out.println("5. Update Member");
+        out.println("6. Books Loaned to Member");
 
         out.println("Enter your choice: ");
 
@@ -198,7 +207,7 @@ public class UserManager
     public void displayMembers()
     {
         for(LibraryMember member : memberList)
-            member.display();
+            out.println("Name: " + member.getFirstName() + " " + member.getLastName());
 
     }
 

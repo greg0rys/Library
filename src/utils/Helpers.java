@@ -2,9 +2,6 @@ package utils;
 
 import LibraryObjects.Book;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 import static java.lang.System.out;
@@ -65,5 +62,11 @@ public class Helpers
             out.println();
         }
     }
+
+    static public void addNewLine()
+    {
+        out.println();
+    }
+
 
 }

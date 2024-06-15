@@ -49,12 +49,12 @@ public class Driver
      */
     private static int menu()
     {
-        out.println("1. Display LibraryObjects.Book Count");
-        out.println("2. Add New LibraryObjects.Book To LibraryObjects.Library");
+        out.println("1. Display Book Count");
+        out.println("2. Add New Book To Library");
         out.println("3. Display All Books");
-        out.println("4. Display Shelf Count");
-        out.println("5. Add Shelf To LibraryObjects.Library");
-        out.println(("6. Display All Shelves"));
+        out.println("4. Member Management System");
+        out.println("5. Display Total Members");
+        out.println("6. Add New Member To Library");
         out.println("0. Exit");
 
         out.print("Please enter your choice: ");
@@ -69,6 +69,7 @@ public class Driver
      */
     private  void controller(int selection) throws SQLException
     {
+        UserManager um = new UserManager();
 
         switch (selection)
         {
@@ -86,7 +87,7 @@ public class Driver
                 LIBRARY_SYSTEM.listAllBooks();
                 break;
             case 4:
-                new UserManager().start();
+                um.start();
                 break;
             default:
                 out.println("Not a valid menu choice, try again");

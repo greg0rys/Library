@@ -37,4 +37,9 @@ public class BookManager
             book.display();
 
     }
+
+    public boolean addBook(Book book)
+    {
+        return BOOK_LIST.add(book);
+    }
 }

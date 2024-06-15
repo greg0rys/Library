@@ -18,36 +18,31 @@ public class UserTableManager
     private final static List<LibraryMember> MEMBERS = new ArrayList<>();
     private static PreparedStatement preparedStatement;
 
-    public UserTableManager() throws SQLException
-    {
-//       super();
-       queryAllMembers();
+    public UserTableManager() throws SQLException {}
 
-    }
 
 
     /**
      * Query in memory DB collect all members. Stored linear.
      * @return ArrayList of all members.
      */
-    private List<LibraryMember> queryAllMembers()
+    public List<LibraryMember> queryAllMembers()
     {
         try(Connection conn = DriverManager.getConnection(DB_URL))
         {
-            List<LibraryMember> members = new ArrayList<>();
             PreparedStatement ps = conn.prepareStatement(GET_ALL_USERS);
             ResultSet rs = ps.executeQuery();
 
             while(rs.next())
             {
-                members.add(
+                MEMBERS.add(
                         new LibraryMember(rs.getString("FirstName"),
                                               rs.getString("LastName"),
                                               rs.getInt("UserCardNumber"))
                 );
             }
 
-            return members;
+            return MEMBERS;
         }
         catch(SQLException e)
         {

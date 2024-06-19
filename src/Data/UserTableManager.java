@@ -15,12 +15,11 @@ public class UserTableManager
     private final static String GET_ALL_USERS = "SELECT * FROM LibraryUser";
     private final static String ADD_NEW_USER = "INSERT INTO LibraryUser VALUES(?,?,?,?)";
     private final static String DELETE_USER = "DELETE FROM LibraryUser WHERE ID = ?";
-    private final static List<LibraryMember> MEMBERS = new ArrayList<>();
+    private final List<LibraryMember> MEMBERS = new ArrayList<>();
     private static PreparedStatement preparedStatement;
 
     public UserTableManager() throws SQLException
     {
-//       super();
        queryAllMembers();
 
     }
@@ -30,30 +29,29 @@ public class UserTableManager
      * Query in memory DB collect all members. Stored linear.
      * @return ArrayList of all members.
      */
-    private List<LibraryMember> queryAllMembers()
+    private boolean queryAllMembers()
     {
         try(Connection conn = DriverManager.getConnection(DB_URL))
         {
-            List<LibraryMember> members = new ArrayList<>();
             PreparedStatement ps = conn.prepareStatement(GET_ALL_USERS);
             ResultSet rs = ps.executeQuery();
 
             while(rs.next())
             {
-                members.add(
+                MEMBERS.add(
                         new LibraryMember(rs.getString("FirstName"),
                                               rs.getString("LastName"),
                                               rs.getInt("UserCardNumber"))
                 );
             }
 
-            return members;
+            return true;
         }
         catch(SQLException e)
         {
 
             out.println(e.getMessage());
-            return null;
+            return false;
         }
     }
 
@@ -79,7 +77,7 @@ public class UserTableManager
                 preparedStatement.setInt(3, member.getCardNumber());
                 preparedStatement.setInt(4, member.getTotalBooksOnLoan());
                 preparedStatement.executeUpdate();
-               return MEMBERS.add(member);
+               return MEMBERS.add(member); // store the users in a local data struct to prevent db interactions
             } catch (RuntimeException | SQLException e)
             {
                 throw new RuntimeException(e);

@@ -12,6 +12,8 @@ public class SearchResult
 {
     private Book singleResult;
     private List<Book> multiResult;
+    private boolean isMulti = false;
+    private boolean isSingle = false;
 
     public SearchResult()
     {}
@@ -19,10 +21,17 @@ public class SearchResult
     public SearchResult(Book B)
     {
         singleResult = B;
+        isSingle = true;
     }
 
     public SearchResult(List<Book> multi)
     {
         multiResult = multi;
+        isMulti = true;
+    }
+
+    public int resultType()
+    {
+        return isSingle ? 1 : 2;
     }
 }

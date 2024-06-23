@@ -1,3 +1,14 @@
+/**
+ * Shelves should work as they would on similar applications such as goodreads. You can have an unlimited number of books
+ * on a given shelf.
+ * UPDATES:
+ * 06/22 -
+ *  Removed the SHELF_CAPACTIY fields as they will no longer have a capacity.
+ *  Removing SHELF_ID final field to make use of the ID number in the database for better clarity.
+ * @author greg0rys
+ * @vesion 06.22.24
+ *
+ */
 package LibraryObjects;
 
 import static java.lang.System.out;
@@ -10,6 +21,7 @@ import java.util.Random;
 public class BookShelf
 {
 
+    private String shelfName = "";
     private final int SHELF_CAPACITY = 200; // Capacity of this shelf;
     private final int MAX_ID = 8500;  // the largest ID that a shelf can be assigned;
     private Hashtable<String,Book> books = null;  // the table of books on this shelf.

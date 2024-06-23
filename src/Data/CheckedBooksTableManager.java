@@ -27,6 +27,10 @@ public class CheckedBooksTableManager
         return DriverManager.getConnection(DB_URL);
     }
 
+    /**
+     * TODO: CHANGE THIS TO RETURN CheckedBook and NOT CheckedBookNode.
+     * @return
+     */
     public List<CheckedBookNode> getAllCheckedOutBooks()
     {
         try(Connection conn = DriverManager.getConnection(DB_URL))

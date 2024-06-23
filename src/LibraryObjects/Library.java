@@ -4,9 +4,11 @@ import java.sql.SQLException;
 import java.util.*;
 
 import ManagerClasses.BookManager;
+import ManagerClasses.CheckedBooksManager;
 import ManagerClasses.ShelfManager;
 import ManagerClasses.UserManager;
-import utils.Helpers;
+import Utils.Helpers;
+import Utils.Menu;
 import static java.lang.System.out;
 
 public class Library
@@ -16,10 +18,14 @@ public class Library
     private final UserManager userManager = new UserManager();
     private final BookManager bookManager = new BookManager();
     private final ShelfManager shelfManager = new ShelfManager();
+    private final CheckedBooksManager checkedBooksManager = new CheckedBooksManager();
     private final Scanner scanner = new Scanner(System.in);
 
 
-
+    /**
+     * TODO: make sure all manager classes have loaded data from db
+     * @throws SQLException
+     */
     public Library() throws SQLException
     { /* default constructor */ }
 
@@ -30,35 +36,31 @@ public class Library
 
 
     /**
-     * Add a shelf to the library
-     *
-     * @param bookShelf the LibraryObjects.BookShelf that will be added to the library
+     * Find a book in the Library system.
+     * @return null if the manager is empty as there will be no books. (Caller must always check for null)
+     *  Else a list of search results.
      */
-    public boolean addBookShelf(BookShelf bookShelf)
+    public List<Book> findBook()
     {
-        return shelfManager.addShelf(bookShelf);
-    }
+        if(bookManager.empty())
+            return null;
 
-//    /**
-//     * Add a common book to a shelf AFTER it gets added to the library if it's new.
-//     * TODO: Implement boolean check.
-//     */
-//    public void addBook()
-//    {
-//
-//        // now do something to the shelf. This feels relational.... EG Shelf > LibraryObjects.Book || LibraryObjects.Book > Shelf
-//        shelfManager.insertBook(Helpers.collectNewBookData());
-//
-//
-//    }
+        switch(Menu.findBookMenu())
+        {
+            case 1:
+                return bookManager.findByTitle(Helpers.collectBookTitle());
+            case 2:
+                return bookManager.findByAuthor(Helpers.collectBookAuthor());
+            case 3:
+                return bookManager.findByGenre(Helpers.collectBookGenre());
+            case 4:
+                return bookManager.findByPrice(Helpers.collectBookPrice());
+            default:
+                out.println("Not a valid search type lets try again");
+                break;
+        }
 
-
-
-
-
-    public boolean findBook()
-    {
-        return true;
+        return findBook(); // If we made it here - recurse.
     }
     /**
      * Get a LibraryObjects.BookShelf of a given ID number
@@ -83,22 +85,6 @@ public class Library
     /**
      * Display the total number of books & shelves in the library
      */
-//    public void displayTotals()
-//    {
-//        if (shelfMap == null)
-//        {
-//            return;
-//        }
-//
-//        printTotalBooks();
-//        numShelves();
-//        out.println();
-//    }
-
-//    private void numShelves()
-//    {
-//        out.println("Total Number of Books: " + shelfManager.shelfCount());
-//    }
 
     /**
      * List each book in the library

@@ -1,10 +1,7 @@
-package utils;
+package Utils;
 
 import LibraryObjects.Book;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 import static java.lang.System.out;
@@ -20,6 +17,8 @@ public class Helpers
     private static final int MAX_SHELF_ID = 400567;
     private static final int MAX_CARD_NUM = (Integer.MAX_VALUE / 4);
     private static final Random RANDOM = new Random();
+    private static final Scanner SCANNER = new Scanner(System.in);
+    private static String input;
 
 
     public Helpers() {};
@@ -66,4 +65,53 @@ public class Helpers
         }
     }
 
+    public static String collectBookTitle()
+    {
+        // TODO: input validation
+        clearStringInput();
+        out.println("Enter Books Title: ");
+        input = nextLine();
+        return (input.isEmpty()) ? collectBookTitle() : input;
+    }
+
+    public static String collectBookAuthor()
+    {
+        // TODO: input validation
+        clearStringInput();
+        out.println("Enter Books Author: ");
+        input = nextLine();
+        return (input.isEmpty()) ? collectBookAuthor() : input;
+    }
+
+    public static String collectBookGenre()
+    {
+        // TODO: input validation
+        clearStringInput();
+        out.println("Enter Genre of Books: ");
+        input = nextLine();
+        return (input.isEmpty()) ? collectBookGenre() : input; // if empty recurse.
+    }
+
+    public static Double collectBookPrice()
+    {
+        // TODO: input validation
+
+        out.println("Enter Books Price Range: ");
+        return SCANNER.nextDouble();
+    }
+
+
+    /**
+     * shorthand method to call Scanner.nextLine();
+     * @return the input string;
+     */
+    private static String nextLine()
+    {
+        return SCANNER.nextLine().strip(); // remove any whitespace.
+    }
+
+    private static void clearStringInput()
+    {
+        input = "";
+    }
 }

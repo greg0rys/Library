@@ -37,4 +37,49 @@ public class BookManager
             book.display();
 
     }
+
+    public List<Book> findByTitle(String title)
+    {
+        List<Book> foundBooks = new ArrayList<>();
+
+        for (Book book : BOOK_LIST)
+            if (book.getTitle().equalsIgnoreCase(title))
+                foundBooks.add(book);
+
+        return foundBooks;
+    }
+
+    public List<Book> findByAuthor(String author)
+    {
+        List<Book> foundBooks = new ArrayList<>();
+
+        for (Book book : BOOK_LIST)
+            if (book.getAuthor().equalsIgnoreCase(author))
+                foundBooks.add(book);
+
+        return foundBooks;
+    }
+
+    public List<Book> findByGenre(String genre)
+    {
+        List<Book> foundBooks = new ArrayList<>();
+
+        for (Book book : BOOK_LIST)
+            if (book.getGenre().equalsIgnoreCase(genre))
+                foundBooks.add(book);
+
+        return foundBooks;
+    }
+
+    public List<Book> findByPrice(Double price)
+    {
+        // return an arraylist of all books that match the price
+        List<Book> foundBooks = new ArrayList<>();
+
+        for (Book book : BOOK_LIST)
+            if (book.getPrice().equals(price))
+                foundBooks.add(book);
+
+        return foundBooks;
+    }
 }

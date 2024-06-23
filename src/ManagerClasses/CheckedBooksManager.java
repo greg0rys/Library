@@ -7,19 +7,27 @@
 package ManagerClasses;
 
 import Data.CheckedBooksTableManager;
-import LibraryObjects.Book;
+import LibraryObjects.CheckedBook;
+import Nodes.CheckedBookNode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CheckedBooksManager
 {
 
     private static final CheckedBooksTableManager BOOKS_TABLE_MANAGER = new CheckedBooksTableManager(); // statically create the field so only one instance.
 
-
+    private static List<CheckedBookNode> allCheckedBooks = BOOKS_TABLE_MANAGER.getAllCheckedOutBooks();
     /**
      * Default no args constructor.
      */
     public CheckedBooksManager()
     {
+    }
+
+    public List<CheckedBookNode> getAllCheckedOutBooks() {
+        return allCheckedBooks;
     }
 
 

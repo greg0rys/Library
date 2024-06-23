@@ -33,8 +33,9 @@ public class Library
      * Used to copy a library
      * @param lib the library object we wish to copy.
      */
-    public Library(Library lib) throws SQLException {
-//        copy(lib);
+    public Library(Library lib) throws SQLException
+    {
+        // copy(lib);
     }
 
     public boolean hasBooks()
@@ -73,9 +74,6 @@ public class Library
 
 
 
-    /**
-     * Display the total number of books & shelves in the library
-     */
 
     /**
      * List each book in the library

@@ -29,6 +29,14 @@ public class Library
     public Library() throws SQLException
     { /* default constructor */ }
 
+    /**
+     * Used to copy a library
+     * @param lib the library object we wish to copy.
+     */
+    public Library(Library lib) throws SQLException {
+//        copy(lib);
+    }
+
     public boolean hasBooks()
     {
         return (!bookManager.empty());
@@ -62,25 +70,8 @@ public class Library
 
         return findBook(); // If we made it here - recurse.
     }
-    /**
-     * Get a LibraryObjects.BookShelf of a given ID number
-     *
-     * @param shelfId the shelf ID of the shelf.
-     * @return the LibraryObjects.BookShelf object that has a matching shelf ID
-     */
-    public BookShelf getBookShelf(int shelfId)
-    {
-        return shelfMap.get(shelfId);
-    }
 
-    /**
-     * Print a list of all Shelves in the LibraryObjects.Library - Includes Shelf IDs
-     */
-    public void printShelfMap()
-    {
-        for (Map.Entry<Integer, BookShelf> shelf : shelfMap.entrySet())
-            out.println("Shelf ID: " + shelf.getKey() + ", LibraryObjects.Book Shelf: " + shelf.getValue());
-    }
+
 
     /**
      * Display the total number of books & shelves in the library
@@ -109,40 +100,7 @@ public class Library
 
     }
 
-    /*
-        Private methods
-     */
 
 
-
-
-    /**
-     * Search the library for a book by it's given title
-     *
-     * @param resultList      an ArrayList of all matching titles.
-     * @param identity        the title of the book being searched for.
-     * @param shelfCollection the map of all shelves to search
-     * @return true if the title is found else false.
-     */
-    private boolean searchLibraryForTitle(ArrayList<Book> resultList, String identity,
-                                          Hashtable<Integer, BookShelf> shelfCollection)
-    {
-        boolean found = false;
-        Book result = null;
-        int shelfID = 0;
-
-        for (BookShelf s : shelfCollection.values())
-        {
-            result = s.findBookByTitle(identity);
-            shelfID = s.getID(); // I want the search results to display what shelf a book was found on
-            if (result != null)
-            {
-                resultList.add(result);
-                found = true;
-            }
-        }
-
-        return found;
-    }
 
 }

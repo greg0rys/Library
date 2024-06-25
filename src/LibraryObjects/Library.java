@@ -14,7 +14,8 @@ import static java.lang.System.out;
 public class Library
 {
 
-    private HashMap<Integer, BookShelf> shelfMap = null;
+    // TODO the managers should become static so that here is always only one instance VS multi if we have several libraries.
+    //      The respective managers can be integrated with logon features for other databases
     private  UserManager userManager = new UserManager();
     private BookManager bookManager = new BookManager();
     private ShelfManager shelfManager = new ShelfManager();

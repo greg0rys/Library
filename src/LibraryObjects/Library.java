@@ -15,10 +15,10 @@ public class Library
 {
 
     private HashMap<Integer, BookShelf> shelfMap = null;
-    private final UserManager userManager = new UserManager();
-    private final BookManager bookManager = new BookManager();
-    private final ShelfManager shelfManager = new ShelfManager();
-    private final CheckedBooksManager checkedBooksManager = new CheckedBooksManager();
+    private  UserManager userManager = new UserManager();
+    private BookManager bookManager = new BookManager();
+    private ShelfManager shelfManager = new ShelfManager();
+    private  CheckedBooksManager checkedBooksManager = new CheckedBooksManager();
     private final Scanner scanner = new Scanner(System.in);
 
 
@@ -35,7 +35,13 @@ public class Library
      */
     public Library(Library lib) throws SQLException
     {
-        // copy(lib);
+        if(lib == null)
+            throw new IllegalArgumentException("Library object cannot be null");
+
+        bookManager = lib.getBookManager();
+        userManager = lib.getUserManager();
+        shelfManager = lib.getShelfManager();
+        checkedBooksManager = lib.getCheckedBooksManager();
     }
 
     public boolean hasBooks()
@@ -99,6 +105,28 @@ public class Library
     }
 
 
+    private BookManager getBookManager()
+    {
+        return bookManager;
+    }
 
+    private UserManager getUserManager()
+    {
+        return userManager;
+    }
+
+    private ShelfManager getShelfManager()
+    {
+        return shelfManager;
+    }
+
+    /**
+     * Get the libraries CheckedBookManager - this method is used for the copy constructor
+     * @return The class instance of the CheckedBookManager
+     */
+    private CheckedBooksManager getCheckedBooksManager()
+    {
+        return checkedBooksManager;
+    }
 
 }

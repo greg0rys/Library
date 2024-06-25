@@ -34,4 +34,37 @@ public class SearchResult
     {
         return isSingle ? 1 : 2;
     }
+
+    public List<Book> getMultiResult()
+    {
+        // check to make sure we aren't null
+        if(multiResult == null)
+            return null;
+
+        return multiResult;
+    }
+
+    public Book getSingleResult()
+    {
+        if(singleResult == null)
+            return null;
+
+        return singleResult;
+    }
+
+    public boolean setMultiResult(List<Book> res)
+    {
+        if(res == null)
+            return false;
+        multiResult = res;
+        return true;
+    }
+
+    public boolean setSingleResult(Book B)
+    {
+        if(B == null)
+            return false;
+        singleResult = B;
+        return true;
+    }
 }

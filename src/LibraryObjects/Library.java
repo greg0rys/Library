@@ -19,7 +19,6 @@ public class Library
     private BookManager bookManager = new BookManager();
     private ShelfManager shelfManager = new ShelfManager();
     private  CheckedBooksManager checkedBooksManager = new CheckedBooksManager();
-    private final Scanner scanner = new Scanner(System.in);
 
 
     /**
@@ -42,11 +41,6 @@ public class Library
         userManager = lib.getUserManager();
         shelfManager = lib.getShelfManager();
         checkedBooksManager = lib.getCheckedBooksManager();
-    }
-
-    public boolean hasBooks()
-    {
-        return (!bookManager.empty());
     }
 
 
@@ -79,15 +73,65 @@ public class Library
     }
 
 
-
-
     /**
      * List each book in the library
      * List BookID as well.
      */
     public void listAllBooks()
     {
-        bookManager.display();
+        bookManager.displayAllBooks();
+    }
+
+    /**
+     * Display all the books with a given title.
+     * @param title the title of the book we wish to find - String
+     * @return true if printed false if else.
+     */
+    public boolean listBooksByTitle(String title)
+    {
+        if(title.isEmpty())
+        {
+            out.println("No title provided");
+            return false;
+        }
+
+        bookManager.displayBooksByTitle(bookManager.findByTitle(title.strip()));
+
+        return true;
+    }
+
+    /**
+     * Lists all the books in the library by a given author.
+     *
+     * @param author the author to search for
+     * @return true if author is empty, indicating no books were found, false otherwise
+     */
+    public boolean listBooksByAuthor(String author)
+    {
+        if(author.isEmpty())
+        {
+            out.println("No author has been provided");
+            return false;
+        }
+        bookManager.displayBooksByAuthor(bookManager.findByAuthor(author));
+        return true;
+    }
+
+    /**
+     * Retrieves a list of books by genre and displays them.
+     *
+     * @param genre the genre of the books to be listed
+     * @return true if the genre is empty (indicating no books were found), false otherwise
+     */
+    public boolean listBooksByGenre(String genre)
+    {
+        if(genre.isEmpty())
+        {
+            out.println("No genre provided.");
+            return false;
+        }
+        bookManager.displayBooksByGenre(bookManager.findByGenre(genre));
+        return genre.isEmpty();
     }
 
     /**
@@ -96,6 +140,12 @@ public class Library
      */
     public void printTotalBooks()
     {
+        // standard error when there is no books in the library
+        if(bookManager.empty())
+        {
+            out.println("There are no books currently in the library");
+            return;
+        }
         int totalBooks = bookManager.getTotalBooks();
         String isA = "is " + totalBooks + " book in the library";
         String areA = " are a total of " + totalBooks + " books in the library.";
@@ -105,16 +155,31 @@ public class Library
     }
 
 
+    /**
+     * Retrieves the BookManager object of the Library.
+     *
+     * @return The BookManager object.
+     */
     private BookManager getBookManager()
     {
         return bookManager;
     }
 
+    /**
+     * Returns the UserManager object of the Library.
+     *
+     * @return The UserManager object.
+     */
     private UserManager getUserManager()
     {
         return userManager;
     }
 
+    /**
+     * Retrieves the ShelfManager object of the Library.
+     *
+     * @return The ShelfManager object.
+     */
     private ShelfManager getShelfManager()
     {
         return shelfManager;
@@ -128,5 +193,6 @@ public class Library
     {
         return checkedBooksManager;
     }
+
 
 }

@@ -19,6 +19,7 @@ public class Menu {
         out.println("3. Search by Genre");
         out.println("4. Search by Price");
 
+        out.println("Choice: ");
         menuChoice = SCANNER.nextInt();
 
         // Check for choice validity.
@@ -29,4 +30,15 @@ public class Menu {
         return findBookMenu(); // if we don't have a valid choice call ourselves.
     }
 
+    static public int displayBooksMenu()
+    {
+        out.println("1. Display all books");
+        out.println("2. Display books by title");
+        out.println("3. Display books by author");
+        out.println("4. Display books by genre");
+        out.println("5. Display books by price");
+
+        out.println("Choice:" );
+        return SCANNER.nextInt();
+    }
 }

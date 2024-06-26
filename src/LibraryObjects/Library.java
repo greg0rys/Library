@@ -42,6 +42,7 @@ public class Library
         userManager = lib.getUserManager();
         shelfManager = lib.getShelfManager();
         checkedBooksManager = lib.getCheckedBooksManager();
+
     }
 
 
@@ -50,12 +51,13 @@ public class Library
      * @return null if the manager is empty as there will be no books. (Caller must always check for null)
      *  Else a list of search results.
      */
-    public List<Book> findBook()
+    private List<Book> findBook(int searchType)
     {
         if(bookManager.empty())
             return null;
 
-        switch(Menu.findBookMenu())
+        /* instead of passing Menu.findBookMenu() as a function arg, lets switch off input */
+        switch(searchType)
         {
             case 1:
                 return bookManager.findByTitle(Helpers.collectBookTitle());
@@ -70,7 +72,23 @@ public class Library
                 break;
         }
 
-        return findBook(); // If we made it here - recurse.
+        return null;
+    }
+
+
+    public List<Book> search(boolean displaySearch, int searchType)
+    {
+        /* copy the menus return value as a representation of the search type. (Used to process display) */
+        /* find a book based of the users display search criteria */
+        if(displaySearch)
+        {
+            searchType = Menu.displayBooksMenu();
+            return findBook(searchType);
+        }
+
+        searchType = Menu.findBookMenu();
+        return findBook(searchType);
+
     }
 
 
@@ -81,6 +99,20 @@ public class Library
     public void listAllBooks()
     {
         bookManager.displayAllBooks();
+    }
+
+    public void displaySearchResults(int searchType, List<Book> result)
+    {
+        if(result == null || result.isEmpty())
+        {
+            out.println("No books found.");
+            return;
+        }
+
+        switch(searchType)
+        {
+            case 1: listBooksByTitle()
+        }
     }
 
     /**
@@ -155,6 +187,10 @@ public class Library
 
     }
 
+    public void userManager() throws SQLException
+    {
+        userManager.start();
+    }
 
     /**
      * Retrieves the BookManager object of the Library.
@@ -193,6 +229,29 @@ public class Library
     private CheckedBooksManager getCheckedBooksManager()
     {
         return checkedBooksManager;
+    }
+
+    /* private display functions for processing search results */
+
+    /**
+     * all of these can just call display on their search results since it will print all data about the books anyways.
+     * @param res
+     */
+    private void displayTitleSearch(List<Book> res)
+    {
+        int i = 0;
+        for(Book b : res)
+        {
+            out.println((i++) + ". " + b.getTitle());
+        }
+//            b.display();
+    }
+
+    private void displayAuthorSearch(List<Book> res)
+    {
+        int i = 0;
+        for(Book b : res)
+            out.println((i++) + ". " +)
     }
 
 

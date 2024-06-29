@@ -4,100 +4,101 @@ import java.sql.SQLException;
 import java.util.*;
 
 import ManagerClasses.BookManager;
+import ManagerClasses.CheckedBooksManager;
 import ManagerClasses.ShelfManager;
 import ManagerClasses.UserManager;
-import utils.Helpers;
+import Utils.Helpers;
+import Utils.Menu;
 import static java.lang.System.out;
 
 public class Library
 {
 
+<<<<<<< HEAD
     private HashMap<Integer, BookShelf> shelfMap = null;
     private final BookManager bookManager = new BookManager();
     private final ShelfManager shelfManager = new ShelfManager();
     private final Scanner scanner = new Scanner(System.in);
 
+=======
+    // TODO the managers should become static so that here is always only one instance VS multi if we have several libraries.
+    //      The respective managers can be integrated with logon features for other databases
+    private  UserManager userManager = new UserManager();
+    private BookManager bookManager = new BookManager();
+    private ShelfManager shelfManager = new ShelfManager();
+    private  CheckedBooksManager checkedBooksManager = new CheckedBooksManager();
+>>>>>>> 9cc9aabedd5cb697edf9c2bade802971a5321f85
 
 
+    /**
+     * TODO: make sure all manager classes have loaded data from db
+     * @throws SQLException
+     */
     public Library() throws SQLException
     { /* default constructor */ }
 
-    public boolean hasBooks()
+    /**
+     * Used to copy a library
+     * @param lib the library object we wish to copy.
+     */
+    public Library(Library lib) throws SQLException
     {
-        return (!bookManager.empty());
+        if(lib == null)
+            throw new IllegalArgumentException("Library object cannot be null");
+
+        bookManager = lib.getBookManager();
+        userManager = lib.getUserManager();
+        shelfManager = lib.getShelfManager();
+        checkedBooksManager = lib.getCheckedBooksManager();
+
     }
 
 
     /**
-     * Add a shelf to the library
-     *
-     * @param bookShelf the LibraryObjects.BookShelf that will be added to the library
+     * Find a book in the Library system.
+     * @return null if the manager is empty as there will be no books. (Caller must always check for null)
+     *  Else a list of search results.
      */
-    public boolean addBookShelf(BookShelf bookShelf)
+    private List<Book> findBook(int searchType)
     {
-        return shelfManager.addShelf(bookShelf);
+        if(bookManager.empty())
+            return null;
+
+        /* instead of passing Menu.findBookMenu() as a function arg, lets switch off input */
+        switch(searchType)
+        {
+            case 1:
+                return bookManager.findByTitle(Helpers.collectBookTitle());
+            case 2:
+                return bookManager.findByAuthor(Helpers.collectBookAuthor());
+            case 3:
+                return bookManager.findByGenre(Helpers.collectBookGenre());
+            case 4:
+                return bookManager.findByPrice(Helpers.collectBookPrice());
+            default:
+                out.println("Not a valid search type lets try again");
+                break;
+        }
+
+        return null;
     }
 
-//    /**
-//     * Add a common book to a shelf AFTER it gets added to the library if it's new.
-//     * TODO: Implement boolean check.
-//     */
-//    public void addBook()
-//    {
-//
-//        // now do something to the shelf. This feels relational.... EG Shelf > LibraryObjects.Book || LibraryObjects.Book > Shelf
-//        shelfManager.insertBook(Helpers.collectNewBookData());
-//
-//
-//    }
 
-
-
-
-
-    public boolean findBook()
+    public List<Book> search(boolean displaySearch, int searchType)
     {
-        return true;
-    }
-    /**
-     * Get a LibraryObjects.BookShelf of a given ID number
-     *
-     * @param shelfId the shelf ID of the shelf.
-     * @return the LibraryObjects.BookShelf object that has a matching shelf ID
-     */
-    public BookShelf getBookShelf(int shelfId)
-    {
-        return shelfMap.get(shelfId);
+        /* copy the menus return value as a representation of the search type. (Used to process display) */
+        /* find a book based of the users display search criteria */
+        if(displaySearch)
+        {
+            searchType = Menu.displayBooksMenu();
+            return findBook(searchType);
+        }
+
+        searchType = Menu.findBookMenu();
+        return findBook(searchType);
+
     }
 
-    /**
-     * Print a list of all Shelves in the LibraryObjects.Library - Includes Shelf IDs
-     */
-    public void printShelfMap()
-    {
-        for (Map.Entry<Integer, BookShelf> shelf : shelfMap.entrySet())
-            out.println("Shelf ID: " + shelf.getKey() + ", LibraryObjects.Book Shelf: " + shelf.getValue());
-    }
-
-    /**
-     * Display the total number of books & shelves in the library
-     */
-//    public void displayTotals()
-//    {
-//        if (shelfMap == null)
-//        {
-//            return;
-//        }
-//
-//        printTotalBooks();
-//        numShelves();
-//        out.println();
-//    }
-
-//    private void numShelves()
-//    {
-//        out.println("Total Number of Books: " + shelfManager.shelfCount());
-//    }
 
     /**
      * List each book in the library
@@ -105,7 +106,73 @@ public class Library
      */
     public void listAllBooks()
     {
-        bookManager.display();
+        bookManager.displayAllBooks();
+    }
+
+    public void displaySearchResults(int searchType, List<Book> result)
+    {
+        if(result == null || result.isEmpty())
+        {
+            out.println("No books found.");
+            return;
+        }
+
+        switch(searchType)
+        {
+            case 1: listBooksByTitle()
+        }
+    }
+
+    /**
+     * Display all the books with a given title.
+     * @param title the title of the book we wish to find - String
+     * @return true if printed false if else.
+     */
+    public boolean listBooksByTitle(String title)
+    {
+        if(title.isEmpty())
+        {
+            out.println("No title provided");
+            return false;
+        }
+
+        bookManager.displayBooksByTitle(bookManager.findByTitle(title.strip()));
+
+        return true;
+    }
+
+    /**
+     * Lists all the books in the library by a given author.
+     *
+     * @param author the author to search for
+     * @return true if author is empty, indicating no books were found, false otherwise
+     */
+    public boolean listBooksByAuthor(String author)
+    {
+        if(author.isEmpty())
+        {
+            out.println("No author has been provided");
+            return false;
+        }
+        bookManager.displayBooksByAuthor(bookManager.findByAuthor(author));
+        return true;
+    }
+
+    /**
+     * Retrieves a list of books by genre and displays them.
+     *
+     * @param genre the genre of the books to be listed
+     * @return true if the genre is empty (indicating no books were found), false otherwise
+     */
+    public boolean listBooksByGenre(String genre)
+    {
+        if(genre.isEmpty())
+        {
+            out.println("No genre provided.");
+            return false;
+        }
+        bookManager.displayBooksByGenre(bookManager.findByGenre(genre));
+        return genre.isEmpty();
     }
 
     /**
@@ -114,6 +181,12 @@ public class Library
      */
     public void printTotalBooks()
     {
+        // standard error when there is no books in the library
+        if(bookManager.empty())
+        {
+            out.println("There are no books currently in the library");
+            return;
+        }
         int totalBooks = bookManager.getTotalBooks();
         String isA = "is " + totalBooks + " book in the library";
         String areA = " are a total of " + totalBooks + " books in the library.";
@@ -122,40 +195,72 @@ public class Library
 
     }
 
-    /*
-        Private methods
-     */
-
-
-
+    public void userManager() throws SQLException
+    {
+        userManager.start();
+    }
 
     /**
-     * Search the library for a book by it's given title
+     * Retrieves the BookManager object of the Library.
      *
-     * @param resultList      an ArrayList of all matching titles.
-     * @param identity        the title of the book being searched for.
-     * @param shelfCollection the map of all shelves to search
-     * @return true if the title is found else false.
+     * @return The BookManager object.
      */
-    private boolean searchLibraryForTitle(ArrayList<Book> resultList, String identity,
-                                          Hashtable<Integer, BookShelf> shelfCollection)
+    private BookManager getBookManager()
     {
-        boolean found = false;
-        Book result = null;
-        int shelfID = 0;
-
-        for (BookShelf s : shelfCollection.values())
-        {
-            result = s.findBookByTitle(identity);
-            shelfID = s.getID(); // I want the search results to display what shelf a book was found on
-            if (result != null)
-            {
-                resultList.add(result);
-                found = true;
-            }
-        }
-
-        return found;
+        return bookManager;
     }
+
+    /**
+     * Returns the UserManager object of the Library.
+     *
+     * @return The UserManager object.
+     */
+    private UserManager getUserManager()
+    {
+        return userManager;
+    }
+
+    /**
+     * Retrieves the ShelfManager object of the Library.
+     *
+     * @return The ShelfManager object.
+     */
+    private ShelfManager getShelfManager()
+    {
+        return shelfManager;
+    }
+
+    /**
+     * Get the libraries CheckedBookManager - this method is used for the copy constructor
+     * @return The class instance of the CheckedBookManager
+     */
+    private CheckedBooksManager getCheckedBooksManager()
+    {
+        return checkedBooksManager;
+    }
+
+    /* private display functions for processing search results */
+
+    /**
+     * all of these can just call display on their search results since it will print all data about the books anyways.
+     * @param res
+     */
+    private void displayTitleSearch(List<Book> res)
+    {
+        int i = 0;
+        for(Book b : res)
+        {
+            out.println((i++) + ". " + b.getTitle());
+        }
+//            b.display();
+    }
+
+    private void displayAuthorSearch(List<Book> res)
+    {
+        int i = 0;
+        for(Book b : res)
+            out.println((i++) + ". " +)
+    }
+
 
 }

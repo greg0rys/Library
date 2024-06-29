@@ -16,9 +16,18 @@ public class UserTableManager
     private final static String ADD_NEW_USER = "INSERT INTO LibraryUser VALUES(?,?,?,?)";
     private final static String ADD_NEW_USER_WITHOUT_LOANS = "INSERT INTO LibraryUser(FirstName,LastName,UserCardNumber) VALUES(?,?,?)";
     private final static String DELETE_USER = "DELETE FROM LibraryUser WHERE ID = ?";
+<<<<<<< HEAD
     private final static List<LibraryMember> MEMBERS = new ArrayList<>();
 
     public UserTableManager() throws SQLException {}
+=======
+    private final List<LibraryMember> MEMBERS = new ArrayList<>();
+    private static PreparedStatement preparedStatement;
+
+    public UserTableManager() throws SQLException
+    {
+       queryAllMembers();
+>>>>>>> 9cc9aabedd5cb697edf9c2bade802971a5321f85
 
 
 
@@ -26,7 +35,11 @@ public class UserTableManager
      * Query in memory DB collect all members. Stored linear.
      * @return ArrayList of all members.
      */
+<<<<<<< HEAD
     public List<LibraryMember> queryAllMembers()
+=======
+    private boolean queryAllMembers()
+>>>>>>> 9cc9aabedd5cb697edf9c2bade802971a5321f85
     {
         try(Connection conn = DriverManager.getConnection(DB_URL))
         {
@@ -42,13 +55,17 @@ public class UserTableManager
                                               rs.getInt("NumBooksOnLoan")));
             }
 
+<<<<<<< HEAD
             return MEMBERS;
+=======
+            return true;
+>>>>>>> 9cc9aabedd5cb697edf9c2bade802971a5321f85
         }
         catch(SQLException e)
         {
 
             out.println(e.getMessage());
-            return null;
+            return false;
         }
     }
 
@@ -71,9 +88,16 @@ public class UserTableManager
                 preparedStatement.setString(1, member.getFirstName());
                 preparedStatement.setString(2, member.getLastName());
                 preparedStatement.setInt(3, member.getCardNumber());
+<<<<<<< HEAD
                 return preparedStatement.executeUpdate() > 0;
             }
             catch (RuntimeException | SQLException e)
+=======
+                preparedStatement.setInt(4, member.getTotalBooksOnLoan());
+                preparedStatement.executeUpdate();
+               return MEMBERS.add(member); // store the users in a local data struct to prevent db interactions
+            } catch (RuntimeException | SQLException e)
+>>>>>>> 9cc9aabedd5cb697edf9c2bade802971a5321f85
             {
                 out.println("DB Update not executed " + member.getFirstName() + " " + member.getCardNumber() +
                                     " is already stored");

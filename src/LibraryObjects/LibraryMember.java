@@ -1,7 +1,6 @@
 package LibraryObjects;
 
-import Data.UserTableManager;
-import utils.Helpers;
+import Utils.Helpers;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,6 +17,7 @@ public class LibraryMember
     private String lastName;
     private int totalLoanedBooks;
     private List<CheckedBook> booksOnLoan;
+    private List<BookShelf> shelves; // goodreads style shelves e.g. read, want to read, reading.
     private final Scanner scanner = new Scanner(System.in);
 
     /**

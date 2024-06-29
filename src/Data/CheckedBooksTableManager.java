@@ -7,11 +7,8 @@ import Nodes.CheckedBookNode;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-import static java.lang.System.out;
-
-public class CheckedBooksManager
+public class CheckedBooksTableManager
 {
     private final String DB_URL ="jdbc:sqlite:newDB.db";
     private final static String GET_ALL_BOOKS_FOR_USER = "SELECT * FROM CheckedOutBooks WHERE UserCardNum = ?";
@@ -20,7 +17,7 @@ public class CheckedBooksManager
     private final static String GET_ALL_CHECKED_BOOKS = "SELECT * FROM CheckedOutBooks";
     private final static List<CheckedBookNode> CHECKED_OUT_BOOKS = new ArrayList<>();
 
-    public CheckedBooksManager() throws SQLException
+    public CheckedBooksTableManager()
     {
 
     }
@@ -30,6 +27,10 @@ public class CheckedBooksManager
         return DriverManager.getConnection(DB_URL);
     }
 
+    /**
+     * TODO: CHANGE THIS TO RETURN CheckedBook and NOT CheckedBookNode.
+     * @return
+     */
     public List<CheckedBookNode> getAllCheckedOutBooks()
     {
         try(Connection conn = DriverManager.getConnection(DB_URL))

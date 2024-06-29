@@ -1,9 +1,12 @@
-package utils;
+package Utils;
 
 import LibraryObjects.Book;
 import LibraryObjects.LibraryMember;
 
+<<<<<<< HEAD:src/utils/Helpers.java
 import java.sql.SQLException;
+=======
+>>>>>>> 9cc9aabedd5cb697edf9c2bade802971a5321f85:src/Utils/Helpers.java
 import java.util.List;
 import java.util.Scanner;
 import static java.lang.System.out;
@@ -20,6 +23,10 @@ public class Helpers
     private static final int MAX_CARD_NUM = (Integer.MAX_VALUE / 4);
     private static final Random RANDOM = new Random();
     private static final Scanner SCANNER = new Scanner(System.in);
+<<<<<<< HEAD:src/utils/Helpers.java
+=======
+    private static String input;
+>>>>>>> 9cc9aabedd5cb697edf9c2bade802971a5321f85:src/Utils/Helpers.java
 
 
     public Helpers() {};
@@ -79,10 +86,62 @@ public class Helpers
         }
     }
 
+<<<<<<< HEAD:src/utils/Helpers.java
     static public void addNewLine()
     {
         out.println();
     }
 
 
+=======
+    public static String collectBookTitle()
+    {
+        // TODO: input validation
+        clearStringInput();
+        out.println("Enter Books Title: ");
+        input = nextLine();
+        return (input.isEmpty()) ? collectBookTitle() : input;
+    }
+
+    public static String collectBookAuthor()
+    {
+        // TODO: input validation
+        clearStringInput();
+        out.println("Enter Books Author: ");
+        input = nextLine();
+        return (input.isEmpty()) ? collectBookAuthor() : input;
+    }
+
+    public static String collectBookGenre()
+    {
+        // TODO: input validation
+        clearStringInput();
+        out.println("Enter Genre of Books: ");
+        input = nextLine();
+        return (input.isEmpty()) ? collectBookGenre() : input; // if empty recurse.
+    }
+
+    public static Double collectBookPrice()
+    {
+        // TODO: input validation
+
+        out.println("Enter Books Price Range: ");
+        return SCANNER.nextDouble();
+    }
+
+
+    /**
+     * shorthand method to call Scanner.nextLine();
+     * @return the input string;
+     */
+    private static String nextLine()
+    {
+        return SCANNER.nextLine().strip(); // remove any whitespace.
+    }
+
+    private static void clearStringInput()
+    {
+        input = "";
+    }
+>>>>>>> 9cc9aabedd5cb697edf9c2bade802971a5321f85:src/Utils/Helpers.java
 }

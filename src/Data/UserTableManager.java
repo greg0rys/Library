@@ -97,7 +97,6 @@ public class UserTableManager
                 preparedStatement.executeUpdate();
                return MEMBERS.add(member); // store the users in a local data struct to prevent db interactions
             } catch (RuntimeException | SQLException e)
->>>>>>> 9cc9aabedd5cb697edf9c2bade802971a5321f85
             {
                 out.println("DB Update not executed " + member.getFirstName() + " " + member.getCardNumber() +
                                     " is already stored");

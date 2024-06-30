@@ -1,4 +1,4 @@
-package Views;
+package Presentation;
 
 import javax.swing.*;
 
@@ -19,6 +19,26 @@ public interface FrameMaker
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.pack();
+
+    }
+
+    default void setEvents(String frameTitle, JFrame frame)
+    {
+        if(frame == null)
+            return;
+
+        if(frameTitle.equalsIgnoreCase("Search By Title"))
+            setTitleSearchEvents(frame);
+    }
+
+    private void setTitleSearchEvents(JFrame frame)
+    {
+        /* Set events specific to Title Search Views*/
+
+    }
+
+    private void setSearchOptionsEvents(JFrame frame)
+    {
 
     }
 

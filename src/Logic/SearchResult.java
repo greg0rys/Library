@@ -1,4 +1,4 @@
-package Nodes;
+package Logic;
 
 import LibraryObjects.Book;
 

@@ -5,15 +5,17 @@
  * @author Greg Shenefelt
  * This form will only present the user with the valid options as Radio Buttons helping to avoid user input errors such
  * as invlaid search choice.
+ *
  */
 
-package Views;
+package Presentation;
 
 import javax.swing.*;
 
 import static java.lang.System.out;
 
-public class LibrarySearch extends JFrame implements FrameMaker
+
+public class SearchOptionsForm extends JFrame implements FrameMaker
 {
     private JPanel rootFrame;
     private JRadioButton titleRadioButton;
@@ -22,15 +24,20 @@ public class LibrarySearch extends JFrame implements FrameMaker
     private JPanel optionContainer;
     private JButton submitButton;
     private JPanel UIBody;
-    private final String BAD_SEARCH_CHOICE = "You did not select a valid search choice, please choose an option from the list.";
+    private JButton homeButton;
+    private JButton userMenuButton;
+    private JButton bookMenuButton;
 
-    public LibrarySearch()
+
+    public SearchOptionsForm()
     {
-        super("Search form");
+        super("Search Option Form");
         add(rootFrame);
         setEvents();
         defaultSetup(this); /* pass self as we are inheriting the JFrame type */
     }
+
+
 
     private void setEvents()
     {

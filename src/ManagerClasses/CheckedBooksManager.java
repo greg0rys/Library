@@ -7,10 +7,8 @@
 package ManagerClasses;
 
 import Data.CheckedBooksTableManager;
-import LibraryObjects.CheckedBook;
-import Nodes.CheckedBookNode;
+import Logic.CheckedBookNode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CheckedBooksManager

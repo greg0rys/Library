@@ -12,7 +12,6 @@ import java.util.Scanner;
 
 import static java.lang.System.out;
 import ManagerClasses.*;
-import Nodes.SearchResult;
 
 public class Driver
 {

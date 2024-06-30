@@ -77,7 +77,7 @@ public class UserManager
      */
     private void getUsersCheckedBooks(LibraryMember temp)
     {
-        userTableManager.getCheckedBooks(temp);
+
     }
 
     private void updateMember(LibraryMember temp)

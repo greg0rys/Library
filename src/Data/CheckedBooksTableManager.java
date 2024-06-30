@@ -2,7 +2,7 @@ package Data;
 
 import LibraryObjects.Book;
 import Constants.LoanStatus;
-import Nodes.CheckedBookNode;
+import Logic.CheckedBookNode;
 
 import java.sql.*;
 import java.util.ArrayList;

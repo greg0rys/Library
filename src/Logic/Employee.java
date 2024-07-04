@@ -64,4 +64,8 @@ public class Employee
     {
         isAdmin = adminStatus;
     }
+
+    public boolean isAdmin() {return false;}
+
+    public boolean isLoggedOn() { return true;}
 }

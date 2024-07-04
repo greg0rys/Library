@@ -35,7 +35,7 @@ public class LibraryHome extends JFrame implements FrameMaker
     {
         super();
         setTitle(FRAME_TITLE);
-        if(E.isLoggedOn)
+        if(E.isLoggedOn())
             loginButton.setText("Logout");
 
     }
